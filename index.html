@@ -6,113 +6,26 @@
 <title>Eagle Emergency Security Ltd | Service With Trust</title>
 <meta name="description" content="Eagle Emergency Security Ltd, Kinondoni, Dar es Salaam. Ulinzi na usalama kwa maeneo ya Serikali na biashara binafsi, pamoja na mafunzo ya ulinzi na usalama.">
 <meta name="theme-color" content="#0A1B33">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0A1B33;--bg2:#0E2342;--card:#12294C;--ac:#F4C025;--tx:#fff;--dim:#B7C2D3;--line:rgba(244,192,37,.25)}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:110px}
-body{margin:0;background:var(--bg);color:var(--tx);font-family:'Inter',sans-serif;line-height:1.6}
-a{color:inherit;text-decoration:none}
-a:focus-visible,button:focus-visible{outline:3px solid var(--ac);outline-offset:3px}
-.top{background:#06111F;font-size:13px;padding:8px 8%;display:flex;flex-wrap:wrap;gap:6px 28px;justify-content:space-between;color:var(--dim)}
-.top b{color:var(--ac);font-weight:600}
-header{position:sticky;top:0;z-index:20;background:rgba(10,27,51,.97);border-bottom:1px solid var(--line)}
-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 8%;gap:20px}
-.logo{display:flex;align-items:center;gap:12px}
-.mark{width:48px;height:48px;border:2px solid var(--ac);border-radius:50%;display:grid;place-items:center;color:var(--ac)}
-.logo span{font-family:'Syncopate',sans-serif;font-weight:700;font-size:15px;line-height:1.2;letter-spacing:1px}
-.logo small{display:block;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;color:var(--ac)}
-.links{display:flex;gap:30px;list-style:none;margin:0;padding:0;align-items:center}
-.links>li{position:relative}
-.links a:hover{color:var(--ac)}
-.dd{display:none;position:absolute;top:100%;left:0;min-width:270px;background:var(--bg2);border:1px solid var(--line);padding:8px 0}
-.links li:hover .dd,.links li:focus-within .dd{display:block}
-.dd a{display:block;padding:10px 20px}
-.btn{display:inline-block;background:var(--ac);color:#0A1B33;font-weight:800;padding:14px 32px;letter-spacing:.5px;border:0;cursor:pointer;font-size:15px}
-.btn:hover{background:#ffd24a}
-.btn2{background:transparent;color:#fff;border:1px solid var(--ac);font-weight:600}
-.btn2:hover{background:rgba(244,192,37,.12)}
-.tg{display:none;background:none;border:1px solid var(--line);color:#fff;padding:8px 12px;font-size:20px;cursor:pointer}
-.hero{padding:130px 8% 120px;background:radial-gradient(circle at 80% 20%,rgba(244,192,37,.16),transparent 45%),repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 2px,transparent 2px 22px),linear-gradient(160deg,#0A1B33,#06111F)}
-.tag{color:var(--ac);font-weight:800;letter-spacing:4px;font-size:13px;display:block;margin-bottom:16px}
-.hero h1{font-size:clamp(38px,6vw,72px);line-height:1.08;font-weight:800;margin:0 0 24px;max-width:860px}
-.hero p{max-width:620px;color:var(--dim);font-size:18px;margin:0 0 36px}
-.row{display:flex;flex-wrap:wrap;gap:16px}
-.sec{padding:84px 8%}
-.alt{background:var(--bg2)}
-.in{max-width:1200px;margin:0 auto}
-.lab{color:var(--ac);font-weight:800;letter-spacing:4px;font-size:13px;margin:0 0 10px}
-h2{font-size:clamp(28px,4vw,42px);line-height:1.15;font-weight:800;margin:0 0 16px}
-.lead{color:var(--dim);max-width:680px;margin:0 0 44px}
-.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:24px}
-.card{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--ac);padding:34px}
-.card svg{width:44px;height:44px;color:var(--ac);margin-bottom:18px}
-.card h3{margin:0 0 10px;font-size:21px}
-.card p{margin:0;color:var(--dim)}
-.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px;align-items:center}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.st{background:var(--card);border:1px solid var(--line);padding:26px;text-align:center}
-.st h3{margin:0 0 4px;font-size:30px;color:var(--ac)}
-.st p{margin:0;color:var(--dim);font-size:14px}
-.chips{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
-.chips span{border:1px solid var(--line);background:var(--card);padding:12px 22px;color:var(--dim)}
-.c{text-align:center}
-.c .lead{margin-left:auto;margin-right:auto}
-.cta{background:var(--ac);color:#0A1B33;text-align:center}
-.cta .btn{background:#0A1B33;color:#fff}
-.cta .btn:hover{background:#12294C}
-footer{background:#06111F;padding:64px 8% 0}
-.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:40px;max-width:1200px;margin:0 auto}
-footer h4{color:var(--ac);margin:0 0 16px;letter-spacing:1px}
-footer p,footer li{color:var(--dim);font-size:15px;margin:0 0 8px}
-footer ul{list-style:none;margin:0;padding:0}
-footer a:hover{color:var(--ac)}
-.cp{border-top:1px solid rgba(255,255,255,.1);margin-top:48px;padding:22px 0;text-align:center;color:var(--dim);font-size:13px}
-.wa{position:fixed;right:20px;bottom:20px;background:#25D366;color:#fff;font-weight:800;padding:14px 20px;border-radius:40px;z-index:30;box-shadow:0 6px 20px rgba(0,0,0,.4)}
-@media(max-width:900px){.tg{display:block}.links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg2);flex-direction:column;align-items:flex-start;padding:20px 8%;gap:16px}.links.on{display:flex}.dd{position:static;display:block;border:0;padding:0 0 0 14px;min-width:0}nav .btn{display:none}.hero{padding:80px 8%}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-.sls{display:grid;max-width:860px}
-.sl{grid-area:1/1;opacity:0;visibility:hidden;transition:opacity .7s,visibility .7s}
-.sl.on{opacity:1;visibility:visible}
-.dots{display:flex;gap:10px;margin-top:32px}
-.dots button{width:48px;height:44px;background:none;border:0;cursor:pointer;position:relative}
-.dots button::before{content:"";position:absolute;left:0;right:0;top:20px;height:4px;background:rgba(255,255,255,.3)}
-.dots button.on::before{background:var(--ac)}
-header.sc{box-shadow:0 4px 20px rgba(0,0,0,.45)}
-.links a.cur{color:var(--ac)}
-.fm{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;max-width:900px;margin:0 auto}
-.fm label{display:block;font-weight:600;margin-bottom:6px}
-.fm input,.fm select,.fm textarea{width:100%;padding:14px;background:var(--card);border:1px solid var(--line);color:#fff;font:inherit}
-.full{grid-column:1/-1}
-.err{color:#FFB4A8;min-height:24px;margin:0}
-@media(prefers-reduced-motion:reduce){.sl{transition:none}}
-</style>
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-<symbol id="sh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/></symbol>
-<symbol id="bf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 7h18v13H3zM9 7V4h6v3"/></symbol>
-<symbol id="bk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/></symbol>
-</defs></svg>
-<div class="top">
-<span><b>Barua pepe:</b> info@eagleemergencysecurity.co.tz</span>
-<span><b>Simu:</b> +255 762 483 387 / +255 766 656 001</span>
-</div>
-<header>
-<nav>
-<a href="#juu" class="logo"><div class="mark"><svg width="26" height="26"><use href="#sh"/></svg></div><span>EAGLE EMERGENCY<small>SECURITY LTD</small></span></a>
-<button class="tg" id="tg" aria-label="Fungua menyu">&#9776;</button>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="sh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/></symbol><symbol id="bf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3 7h18v13H3zM9 7V4h6v3"/></symbol><symbol id="bk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/></symbol></defs></svg>
+<div class="top"><span><b>Barua pepe:</b> info@eagleemergencysecurity.co.tz</span><span><b>Simu:</b> +255 762 483 387 / +255 766 656 001</span></div>
+<header><nav>
+<a href="./" class="logo"><div class="mark"><svg width="26" height="26"><use href="#sh"/></svg></div><span>EAGLE EMERGENCY<small>SECURITY LTD</small></span></a>
+<button class="tg" id="tg" aria-label="Fungua menyu" aria-expanded="false">&#9776;</button>
 <ul class="links" id="lk">
-<li><a href="#juu">Nyumbani</a></li>
-<li><a href="#kuhusu">Kuhusu Sisi</a></li>
-<li><a href="#huduma">Huduma &#9662;</a>
-<div class="dd"><a href="#huduma">Ulinzi wa Maeneo ya Serikali</a><a href="#huduma">Ulinzi wa Biashara Binafsi</a><a href="#huduma">Mafunzo ya Ulinzi na Usalama</a></div></li>
-<li><a href="#wateja">Wateja</a></li>
-<li><a href="#wasiliana">Wasiliana</a></li>
+<li><a href="./" class="cur">Nyumbani</a></li>
+<li><a href="about/">Kuhusu Sisi</a></li>
+<li><a href="service/">Huduma &#9662;</a><div class="dd"><a href="service/ulinzi-wa-serikali/">Ulinzi wa Maeneo ya Serikali</a><a href="service/ulinzi-wa-biashara-binafsi/">Ulinzi wa Biashara Binafsi</a><a href="service/mafunzo-ya-ulinzi-na-usalama/">Mafunzo ya Ulinzi na Usalama</a></div></li>
+<li><a href="blogs/">Makala</a></li>
+<li><a href="faqs/">Maswali</a></li>
+<li><a href="contacts/">Wasiliana</a></li>
 </ul>
-<a href="#wasiliana" class="btn" style="padding:12px 26px">OMBA BEI</a>
-</nav>
-</header>
+<a href="contacts/" class="btn" style="padding:12px 26px">OMBA BEI</a>
+</nav></header>
 <section class="hero" id="juu">
 <span class="tag">SERVICE WITH TRUST</span>
 <div class="sls">
@@ -120,7 +33,7 @@ header.sc{box-shadow:0 4px 20px rgba(0,0,0,.45)}
 <div class="sl"><h1>Ulinzi wa Serikali na biashara binafsi.</h1><p>Walinzi kwa ofisi, taasisi, maduka, benki, viwanda na kumbi za matukio.</p></div>
 <div class="sl"><h1>Mafunzo ya ulinzi na usalama.</h1><p>Tunafundisha walinzi na taasisi viwango vya ulinzi na usalama.</p></div>
 </div>
-<div class="row"><a href="#wasiliana" class="btn">OMBA BEI</a><a href="https://wa.me/255762483387" target="_blank" rel="noopener" class="btn btn2">ZUNGUMZA NASI WHATSAPP</a></div>
+<div class="row"><a href="contacts/" class="btn">OMBA BEI</a><a href="https://wa.me/255762483387" target="_blank" rel="noopener" class="btn btn2">ZUNGUMZA NASI WHATSAPP</a></div>
 <div class="dots" role="group" aria-label="Chagua slaidi"><button class="on" aria-label="Slaidi 1" aria-current="true"></button><button aria-label="Slaidi 2"></button><button aria-label="Slaidi 3"></button></div>
 </section>
 <section class="sec alt" id="kuhusu"><div class="in split">
@@ -136,9 +49,9 @@ header.sc{box-shadow:0 4px 20px rgba(0,0,0,.45)}
 <p class="lab">HUDUMA ZETU</p><h2>Tunachofanya</h2>
 <p class="lead">Huduma kuu tatu kwa wateja wa Serikali na biashara binafsi.</p>
 <div class="g">
-<div class="card"><svg><use href="#sh"/></svg><h3>Ulinzi wa Maeneo ya Serikali</h3><p>Walinzi kwa ofisi, taasisi na maeneo ya Serikali.</p></div>
-<div class="card"><svg><use href="#bf"/></svg><h3>Ulinzi wa Biashara Binafsi</h3><p>Ulinzi wa mali na shughuli za wafanyabiashara na watu binafsi.</p></div>
-<div class="card"><svg><use href="#bk"/></svg><h3>Mafunzo ya Ulinzi na Usalama</h3><p>Mafunzo kwa walinzi na taasisi kuhusu ulinzi na usalama.</p></div>
+<a class="card" href="service/ulinzi-wa-serikali/"><svg><use href="#sh"/></svg><h3>Ulinzi wa Maeneo ya Serikali</h3><p>Walinzi kwa ofisi, taasisi na maeneo ya Serikali.</p><p class="more">Soma zaidi</p></a>
+<a class="card" href="service/ulinzi-wa-biashara-binafsi/"><svg><use href="#bf"/></svg><h3>Ulinzi wa Biashara Binafsi</h3><p>Ulinzi wa mali na shughuli za wafanyabiashara na watu binafsi.</p><p class="more">Soma zaidi</p></a>
+<a class="card" href="service/mafunzo-ya-ulinzi-na-usalama/"><svg><use href="#bk"/></svg><h3>Mafunzo ya Ulinzi na Usalama</h3><p>Mafunzo kwa walinzi na taasisi kuhusu ulinzi na usalama.</p><p class="more">Soma zaidi</p></a>
 </div></div></section>
 <section class="sec alt c" id="wateja"><div class="in">
 <p class="lab">WANAOLINDWA NA SISI</p><h2>Sekta Tunazohudumia</h2>
@@ -155,62 +68,14 @@ header.sc{box-shadow:0 4px 20px rgba(0,0,0,.45)}
 <p style="max-width:640px;margin:0 auto 32px">Tuambie unahitaji ulinzi wa aina gani, nasi tutakupa ushauri na bei.</p>
 <div class="row" style="justify-content:center"><a href="tel:+255762483387" class="btn">PIGA SIMU SASA</a><a href="mailto:info@eagleemergencysecurity.co.tz" class="btn">TUMA BARUA PEPE</a></div>
 </div></section>
-<section class="sec alt c" id="fomu"><div class="in">
-<p class="lab">OMBA BEI</p><h2>Tuma Ombi Lako</h2>
-<p class="lead">Jaza fomu kisha utume kwa WhatsApp au barua pepe. Ujumbe utaandaliwa kwa ajili yako.</p>
-<form id="fm" class="fm" style="text-align:left" novalidate>
-<div><label for="nm">Jina</label><input id="nm" name="nm" autocomplete="name" required></div>
-<div><label for="ph">Namba ya simu</label><input id="ph" name="ph" type="tel" autocomplete="tel" placeholder="0762 000 000" required></div>
-<div class="full"><label for="sv">Huduma unayohitaji</label><select id="sv" name="sv"><option>Ulinzi wa Maeneo ya Serikali</option><option>Ulinzi wa Biashara Binafsi</option><option>Mafunzo ya Ulinzi na Usalama</option><option>Nyingine</option></select></div>
-<div class="full"><label for="ms">Ujumbe (si lazima)</label><textarea id="ms" name="ms" rows="4"></textarea></div>
-<p class="err full" id="er" role="alert"></p>
-<div class="full row"><button type="button" class="btn" id="wa">TUMA KWA WHATSAPP</button><button type="button" class="btn btn2" id="em">TUMA KWA BARUA PEPE</button></div>
-</form></div></section>
-<footer>
-<div class="fg">
+
+<footer><div class="fg">
 <div><h4>EAGLE EMERGENCY SECURITY</h4><p>Service With Trust. Ulinzi na usalama, pamoja na mafunzo ya ulinzi na usalama.</p></div>
-<div><h4>Viungo</h4><ul><li><a href="#kuhusu">Kuhusu Sisi</a></li><li><a href="#huduma">Huduma</a></li><li><a href="#wateja">Wateja</a></li><li><a href="#wasiliana">Wasiliana</a></li></ul></div>
-<div><h4>Huduma</h4><ul><li>Ulinzi wa Maeneo ya Serikali</li><li>Ulinzi wa Biashara Binafsi</li><li>Mafunzo ya Ulinzi na Usalama</li></ul></div>
+<div><h4>Viungo</h4><ul><li><a href="about/">Kuhusu Sisi</a></li><li><a href="service/">Huduma</a></li><li><a href="blogs/">Makala</a></li><li><a href="faqs/">Maswali</a></li><li><a href="contacts/">Wasiliana</a></li></ul></div>
+<div><h4>Huduma</h4><ul><li><a href="service/ulinzi-wa-serikali/">Ulinzi wa Maeneo ya Serikali</a></li><li><a href="service/ulinzi-wa-biashara-binafsi/">Ulinzi wa Biashara Binafsi</a></li><li><a href="service/mafunzo-ya-ulinzi-na-usalama/">Mafunzo ya Ulinzi na Usalama</a></li></ul></div>
 <div><h4>Wasiliana Nasi</h4><p>Mivumoni, Kata ya Wazo, Kinondoni, Dar es Salaam</p><p><a href="tel:+255762483387">+255 762 483 387</a><br><a href="tel:+255766656001">+255 766 656 001</a></p><p><a href="mailto:info@eagleemergencysecurity.co.tz">info@eagleemergencysecurity.co.tz</a></p></div>
-</div>
-<div class="cp">&copy; 2026 EAGLE EMERGENCY SECURITY LTD. HAKI ZOTE ZIMEHIFADHIWA</div>
-</footer>
+</div><div class="cp">&copy; 2026 EAGLE EMERGENCY SECURITY LTD. HAKI ZOTE ZIMEHIFADHIWA</div></footer>
 <a href="https://wa.me/255762483387" class="wa" target="_blank" rel="noopener" aria-label="Zungumza nasi WhatsApp">WhatsApp</a>
-<script>
-(function(){
-var d=document,$=function(s){return d.querySelector(s)},$$=function(s){return [].slice.call(d.querySelectorAll(s))};
-var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
-var t=$('#tg'),l=$('#lk');
-t.addEventListener('click',function(){t.setAttribute('aria-expanded',l.classList.toggle('on'))});
-l.addEventListener('click',function(e){if(e.target.tagName==='A'){l.classList.remove('on');t.setAttribute('aria-expanded','false')}});
-var h=$('header');function sc(){h.classList.toggle('sc',scrollY>40)}
-addEventListener('scroll',sc,{passive:true});sc();
-var sl=$$('.sl'),dots=$$('.dots button'),i=0,tm;
-function go(n){sl[i].classList.remove('on');dots[i].classList.remove('on');dots[i].removeAttribute('aria-current');i=(n+sl.length)%sl.length;sl[i].classList.add('on');dots[i].classList.add('on');dots[i].setAttribute('aria-current','true')}
-function stop(){clearInterval(tm)}
-function play(){stop();if(!rm)tm=setInterval(function(){go(i+1)},6000)}
-dots.forEach(function(b,n){b.addEventListener('click',function(){go(n);play()})});
-var hero=$('.hero');['mouseenter','focusin'].forEach(function(e){hero.addEventListener(e,stop)});['mouseleave','focusout'].forEach(function(e){hero.addEventListener(e,play)});
-play();
-function cnt(el){var to=+el.dataset.count;if(rm){el.textContent=to;return}var s=null;requestAnimationFrame(function f(ts){s=s||ts;var p=Math.min((ts-s)/1200,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})}
-if('IntersectionObserver' in window){
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cnt(e.target);io.unobserve(e.target)}})},{threshold:.6});
-$$('[data-count]').forEach(function(el){if(!rm)el.textContent='0';io.observe(el)});
-var lks=$$('.links>li>a');
-var io2=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)lks.forEach(function(a){a.classList.toggle('cur',a.getAttribute('href')==='#'+e.target.id)})})},{rootMargin:'-40% 0px -55% 0px'});
-$$('section[id]').forEach(function(x){io2.observe(x)});
-}
-var f=$('#fm'),er=$('#er');
-function bad(m,id){er.textContent=m;f.elements[id].focus();return null}
-function msg(){var v=function(n){return f.elements[n].value.trim()};
-if(v('nm').length<2)return bad('Andika jina lako.','nm');
-if(!/^\+?[0-9 ]{9,15}$/.test(v('ph')))return bad('Andika namba ya simu sahihi, mfano 0762 000 000.','ph');
-er.textContent='';
-return 'Habari Eagle Emergency Security, naitwa '+v('nm')+'. Namba yangu: '+v('ph')+'. Huduma ninayohitaji: '+v('sv')+'.'+(v('ms')?' '+v('ms'):'')}
-$('#wa').addEventListener('click',function(){var m=msg();if(m)open('https://wa.me/255762483387?text='+encodeURIComponent(m),'_blank','noopener')});
-$('#em').addEventListener('click',function(){var m=msg();if(m)location.href='mailto:info@eagleemergencysecurity.co.tz?subject='+encodeURIComponent('Ombi la bei: '+f.elements.sv.value)+'&body='+encodeURIComponent(m)});
-f.addEventListener('submit',function(e){e.preventDefault()});
-})();
-</script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
