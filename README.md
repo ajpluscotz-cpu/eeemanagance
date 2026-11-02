@@ -2,15 +2,14 @@
 
 Service With Trust.
 
-Website ya kampuni ya ulinzi na usalama (Mivumoni, Kinondoni, Dar es Salaam).
-
-## Faili
-- `index.html` - ukurasa mzima wa website (HTML na CSS vipo ndani ya faili moja)
+## Muundo
+- `index.html` - ukurasa wa nyumbani
+- `about/`, `service/` (na huduma 3), `blogs/`, `faqs/`, `contacts/`
+- `assets/` - `css/style.css`, `js/main.js`, `logo.svg`, `images/`
+- `robots.txt`, `sitemap.xml`
 
 ## Kuchapisha (GitHub Pages)
-1. Repository > Settings > Pages
-2. Source: Deploy from a branch, Branch: main, folder: / (root)
-3. Save, kisha subiri dakika 1-2 upate link ya website
+Settings > Pages > Deploy from a branch > main > / (root) > Save
 
 ## Mawasiliano
-+255 762 483 387 | +255 766 656 001
++255 762 483 387 | +255 766 656 001 | info@eagleemergencysecurity.co.tz
