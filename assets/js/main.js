@@ -1,6 +1,7 @@
 (function(){
 var d=document,$=function(s){return d.querySelector(s)},$$=function(s){return [].slice.call(d.querySelectorAll(s))};
 var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+var L=function(){return window.eeLang||'sw'};
 var t=$('#tg'),l=$('#lk');
 t.addEventListener('click',function(){t.setAttribute('aria-expanded',l.classList.toggle('on'))});
 l.addEventListener('click',function(e){if(e.target.tagName==='A'){l.classList.remove('on');t.setAttribute('aria-expanded','false')}});
@@ -24,12 +25,12 @@ var f=$('#fm'),er=$('#er');
 if(f){
 function bad(m,id){er.textContent=m;f.elements[id].focus();return null}
 function msg(){var v=function(n){return f.elements[n].value.trim()};
-if(v('nm').length<2)return bad('Andika jina lako.','nm');
-if(!/^\+?[0-9 ]{9,15}$/.test(v('ph')))return bad('Andika namba ya simu sahihi, mfano 0762 000 000.','ph');
+if(v('nm').length<2)return bad(L()==='en'?'Enter your name.':'Andika jina lako.','nm');
+if(!/^\+?[0-9 ]{9,15}$/.test(v('ph')))return bad(L()==='en'?'Enter a valid phone number, e.g. 0762 000 000.':'Andika namba ya simu sahihi, mfano 0762 000 000.','ph');
 er.textContent='';
-return 'Habari Eagle Emergency Security, naitwa '+v('nm')+'. Namba yangu: '+v('ph')+'. Huduma ninayohitaji: '+v('sv')+'.'+(v('ms')?' '+v('ms'):'')}
-$('#wa').addEventListener('click',function(){var m=msg();if(m)open('https://wa.me/255762483387?text='+encodeURIComponent(m),'_blank','noopener')});
-$('#em').addEventListener('click',function(){var m=msg();if(m)location.href='mailto:info@eagleemergencysecurity.co.tz?subject='+encodeURIComponent('Ombi la bei: '+f.elements.sv.value)+'&body='+encodeURIComponent(m)});
+return (L()==='en'?'Hello Eagle Emergency Security, my name is '+v('nm')+'. My number: '+v('ph')+'. Service needed: '+v('sv')+'.':'Habari Eagle Emergency Security, naitwa '+v('nm')+'. Namba yangu: '+v('ph')+'. Huduma ninayohitaji: '+v('sv')+'.')+(v('ms')?' '+v('ms'):'')}
+$('#wa').addEventListener('click',function(){var m=msg();if(m)open('https://wa.me/255762483386?text='+encodeURIComponent(m),'_blank','noopener')});
+$('#em').addEventListener('click',function(){var m=msg();if(m)location.href='mailto:info@eagleemergencysecurity.co.tz?subject='+encodeURIComponent((L()==='en'?'Quote request: ':'Ombi la bei: ')+f.elements.sv.value)+'&body='+encodeURIComponent(m)});
 f.addEventListener('submit',function(e){e.preventDefault()});
 }
 })();
