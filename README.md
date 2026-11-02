@@ -12,4 +12,4 @@ Service With Trust.
 Settings > Pages > Deploy from a branch > main > / (root) > Save
 
 ## Mawasiliano
-+255 762 483 387 | +255 766 656 001 | info@eagleemergencysecurity.co.tz
++255 762 483 386 | +255 766 656 001 | info@eagleemergencysecurity.co.tz
