@@ -4,7 +4,7 @@ Service With Trust.
 
 ## Muundo
 - `index.html` - ukurasa wa nyumbani
-- `about/`, `service/` (na huduma 3), `blogs/`, `faqs/`, `contacts/`
+- `about/`, `service/` (na huduma 10), `blogs/`, `faqs/`, `contacts/`
 - `assets/` - `css/style.css`, `js/main.js`, `logo.svg`, `images/`
 - `robots.txt`, `sitemap.xml`
 
