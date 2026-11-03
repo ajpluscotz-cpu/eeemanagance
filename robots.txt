@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://eagleemergencysecurity.co.tz/sitemap.xml
+Sitemap: https://ajpluscotz-cpu.github.io/eeemanagance/sitemap.xml
