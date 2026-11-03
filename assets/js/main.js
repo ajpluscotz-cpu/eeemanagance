@@ -7,9 +7,9 @@ t.addEventListener('click',function(){t.setAttribute('aria-expanded',l.classList
 l.addEventListener('click',function(e){if(e.target.tagName==='A'){l.classList.remove('on');t.setAttribute('aria-expanded','false')}});
 var h=$('header');function sc(){h.classList.toggle('sc',scrollY>40)}
 addEventListener('scroll',sc,{passive:true});sc();
-var sl=$$('.sl'),dots=$$('.dots button'),i=0,tm;
+var bg=$$('.hbg span'),sl=$$('.sl'),dots=$$('.dots button'),i=0,tm;
 if(sl.length){
-function go(n){sl[i].classList.remove('on');dots[i].classList.remove('on');dots[i].removeAttribute('aria-current');i=(n+sl.length)%sl.length;sl[i].classList.add('on');dots[i].classList.add('on');dots[i].setAttribute('aria-current','true')}
+function go(n){sl[i].classList.remove('on');if(bg[i])bg[i].classList.remove('on');dots[i].classList.remove('on');dots[i].removeAttribute('aria-current');i=(n+sl.length)%sl.length;sl[i].classList.add('on');if(bg[i])bg[i].classList.add('on');dots[i].classList.add('on');dots[i].setAttribute('aria-current','true')}
 function stop(){clearInterval(tm)}
 function play(){stop();if(!rm)tm=setInterval(function(){go(i+1)},6000)}
 dots.forEach(function(b,n){b.addEventListener('click',function(){go(n);play()})});
