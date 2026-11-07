@@ -112,3 +112,5 @@ details p{margin:0;padding:0 22px 20px;color:var(--dim)}
 .pimg.wide{height:auto;aspect-ratio:16/10;max-height:620px}
 .split>div>.stats{margin-top:32px}
 @media(prefers-reduced-motion:reduce){.hbg span{transition:none}}
+
+.hero .hh{font-size:clamp(38px,6vw,72px);line-height:1.08;font-weight:800;margin:0 0 24px;max-width:860px;color:var(--tx)}
