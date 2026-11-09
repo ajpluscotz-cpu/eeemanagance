@@ -1,7 +1,7 @@
 (function(){
 var d=document,$=function(s){return d.querySelector(s)},$$=function(s){return [].slice.call(d.querySelectorAll(s))};
 var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
-var L=function(){return window.eeLang||'sw'};
+var L=function(){return d.documentElement.lang==='en'?'en':'sw'};
 var t=$('#tg'),l=$('#lk');
 t.addEventListener('click',function(){t.setAttribute('aria-expanded',l.classList.toggle('on'))});
 l.addEventListener('click',function(e){if(e.target.tagName==='A'){l.classList.remove('on');t.setAttribute('aria-expanded','false')}});

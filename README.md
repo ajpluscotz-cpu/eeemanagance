@@ -6,6 +6,7 @@ Service With Trust.
 - `index.html` - ukurasa wa nyumbani
 - `about/`, `service/` (na huduma 10), `blogs/`, `faqs/`, `contacts/`
 - `assets/` - `css/style.css`, `js/main.js`, `logo.svg`, `images/`
+- `en/` - toleo la Kiingereza la kurasa zote (kurasa halisi kwa Google)
 - `robots.txt`, `sitemap.xml`
 
 ## Kuchapisha (GitHub Pages)
