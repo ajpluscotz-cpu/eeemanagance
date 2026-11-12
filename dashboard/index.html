@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="sw">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Eagle Emergency Security | Dashibodi</title>
+<link rel="icon" type="image/png" href="../assets/images/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3F4F8;--card:#fff;--tx:#14173A;--dim:#585D78;--line:#DDE0EA;--ac:#F6993F;--nav:#101437;--navtx:#E7E9F5;--okb:#DDF3E6;--okt:#14653B;--wb:#FFF0D9;--wt:#8A4B00;--bb:#FBE0DE;--bt:#9B1C14;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#0B0D26;--card:#151A45;--tx:#ECEEF9;--dim:#A9AFCB;--line:#2A3066;--nav:#070919;--okb:#12382A;--okt:#7FE0A8;--wb:#43300F;--wt:#FFC77A;--bb:#4A1A18;--bt:#FFA9A2;color-scheme:dark}}
+*{box-sizing:border-box}
+html{height:100%}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--tx);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--nav);z-index:10}
+.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+aside{background:var(--nav);color:var(--navtx);padding:20px 14px;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;align-self:start;display:flex;flex-direction:column}
+aside h1{font-size:15px;margin:0 8px 4px;letter-spacing:.5px}
+aside small{display:block;margin:0 8px 20px;color:var(--ac);font-weight:600}
+aside a{display:block;padding:12px 14px;color:var(--navtx);text-decoration:none;font-weight:600;min-height:44px;border-left:3px solid transparent}
+aside a.on{background:rgba(246,153,63,.16);border-color:var(--ac);color:#fff}
+aside a:hover{background:rgba(255,255,255,.07)}
+.me{margin-top:auto;padding:12px 8px;font-size:13px;color:#B9BEDB}
+.me button{margin-top:8px;background:none;border:1px solid #394075;color:var(--navtx);padding:8px 14px;cursor:pointer;min-height:44px}
+main{padding:28px;min-width:0}
+h2{font-size:26px;margin:0 0 20px}
+h3{font-size:16px;margin:0 0 12px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.c{background:var(--card);border:1px solid var(--line);padding:18px;min-width:0}
+.k b{display:block;font-size:30px;font-weight:800;line-height:1.1}
+.k span{color:var(--dim);font-size:14px}
+.bars{display:flex;align-items:flex-end;gap:10px;height:160px}
+.bars div{flex:1;text-align:center;font-size:12px;color:var(--dim)}
+.bars i{display:block;background:var(--ac);margin-bottom:6px}
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--dim);font-size:13px;font-weight:600}
+.p{display:inline-block;padding:3px 10px;font-size:13px;font-weight:600}
+.ok{background:var(--okb);color:var(--okt)}.wn{background:var(--wb);color:var(--wt)}.bd{background:var(--bb);color:var(--bt)}
+button,input,select{font:inherit;color:inherit}
+.b{background:var(--ac);color:#101437;border:0;padding:10px 18px;font-weight:800;cursor:pointer;min-height:44px}
+.b2{background:none;border:1px solid var(--line);padding:8px 12px;cursor:pointer;min-height:44px;color:var(--tx)}
+.b2.on{background:var(--ac);color:#101437;border-color:var(--ac);font-weight:800}
+input,select{background:var(--bg);border:1px solid var(--line);padding:10px;min-height:44px;width:100%}
+.bar{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;align-items:center}
+.bar input{max-width:280px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.f label{font-weight:600;font-size:14px;display:block;margin-bottom:4px}
+ul{list-style:none;margin:0;padding:0}
+li{padding:10px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
+.msg{padding:10px 14px;margin-bottom:16px;font-weight:600}
+.msg.e{background:var(--bb);color:var(--bt)}.msg.o{background:var(--okb);color:var(--okt)}
+.login{max-width:400px;margin:12vh auto;padding:28px}
+.login .f{grid-template-columns:1fr}
+.empty{color:var(--dim);padding:16px 0}
+@media(max-width:820px){
+.app{grid-template-columns:1fr}
+aside{height:auto;flex-direction:row;overflow-x:auto;padding:8px;gap:4px;z-index:5}
+aside h1,aside small,.me span{display:none}
+aside a{border-left:0;border-bottom:3px solid transparent;white-space:nowrap}
+aside a.on{border-color:var(--ac)}
+.me{margin:0 0 0 auto;padding:0}
+.me button{margin:0}
+main{padding:18px}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script>
+(function(){
+const cfg=window.EAGLE_CONFIG||{},root=document.getElementById('root');
+const esc=s=>{const d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML};
+const pad=n=>String(n).padStart(2,'0'),ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()),today=()=>ymd(new Date());
+const addDays=(s,n)=>{const d=new Date(s+'T12:00:00');d.setDate(d.getDate()+n);return ymd(d)};
+const fm=n=>'TSh '+Number(n||0).toLocaleString('en-US');
+const pill=(t,c)=>'<span class="p '+c+'">'+esc(t)+'</span>';
+if(!cfg.url||/PASTE/.test(cfg.url)||!window.supabase){root.innerHTML='<div class="login c"><h2>Dashibodi haijaunganishwa</h2><p>Weka anwani ya Supabase na ufunguo wa umma (anon) kwenye faili <b>config.js</b>, kisha pakia ukurasa upya.</p></div>';return}
+const sb=supabase.createClient(cfg.url,cfg.key);
+const S={uid:null,role:null,name:'',guards:[],clients:[],contracts:[],inv:[],att:[],date:today(),q:'',form:null,msg:null,view:'muhtasari'};
+const isA=()=>S.role==='admin';
+const NAV=[['muhtasari','Muhtasari'],['walinzi','Walinzi'],['mikataba','Wateja na Mikataba',1],['mahudhurio','Mahudhurio'],['malipo','Malipo',1]];
+const cname=id=>{const c=S.clients.find(x=>x.id===id);return c?c.name:'Hakuna kituo'};
+const ctr=id=>S.contracts.find(x=>x.client_id===id)||{};
+const activeG=()=>S.guards.filter(g=>g.status==='Kazini');
+const attOn=d=>{const m={};S.att.filter(a=>a.work_date===d).forEach(a=>m[a.guard_id]=a.status);return m};
+const rateOn=d=>{const m=attOn(d),a=activeG(),n=a.filter(g=>m[g.id]).length;if(!n)return null;return Math.round(a.filter(g=>m[g.id]&&m[g.id]!=='A').length*100/a.length)};
+const payst=p=>p.paid_at?pill('Imelipwa','ok'):p.due_date<today()?pill('Imechelewa','bd'):pill('Inasubiri','wn');
+const cst=e=>!e?pill('Hakuna tarehe','wn'):e<today()?pill('Imeisha','bd'):e<addDays(today(),60)?pill('Inaisha karibu','wn'):pill('Hai','ok');
+const dleft=e=>Math.round((new Date(e+'T12:00:00')-new Date(today()+'T12:00:00'))/864e5);
+function note(t,k){S.msg={t:t,k:k||'e'}}
+async function loadAll(){
+ const d6=addDays(today(),-6),from=S.date<d6?S.date:d6,off={data:[],error:null};
+ const r=await Promise.all([sb.from('guards').select('*').order('code'),sb.from('clients').select('*').order('name'),sb.from('attendance').select('guard_id,work_date,status').gte('work_date',from).lte('work_date',today()),isA()?sb.from('contracts').select('*'):off,isA()?sb.from('invoices').select('*').order('due_date'):off]);
+ r.forEach(x=>{if(x.error)throw x.error});
+ S.guards=r[0].data;S.clients=r[1].data;S.att=r[2].data;S.contracts=r[3].data;S.inv=r[4].data;
+}
+function loginView(m){
+ root.innerHTML='<div class="login c"><h2>Dashibodi ya Eagle</h2><p style="color:var(--dim)">Ingia kwa barua pepe na nenosiri ulilopewa.</p>'+(m?'<div class="msg e">'+esc(m)+'</div>':'')+'<form id="lf" class="f"><div><label for="em">Barua pepe</label><input id="em" type="email" autocomplete="username" required></div><div><label for="pw">Nenosiri</label><input id="pw" type="password" autocomplete="current-password" required></div><button class="b" type="submit">Ingia</button></form><p style="color:var(--dim);font-size:13px">Akaunti mpya zinatengenezwa na msimamizi mkuu pekee.</p></div>';
+ document.getElementById('lf').addEventListener('submit',async e=>{e.preventDefault();const r=await sb.auth.signInWithPassword({email:document.getElementById('em').value.trim(),password:document.getElementById('pw').value});if(r.error)loginView('Barua pepe au nenosiri si sahihi.');else boot()});
+}
+async function boot(){
+ const s=(await sb.auth.getSession()).data.session;if(!s){loginView();return}
+ S.uid=s.user.id;
+ const p=await sb.from('profiles').select('full_name,role').eq('id',S.uid).maybeSingle();
+ if(!p.data){root.innerHTML='<div class="login c"><h2>Akaunti haijaidhinishwa</h2><p>Akaunti yako haina ruhusa bado. Mwombe msimamizi mkuu akupe jukumu.</p><button class="b" id="lo">Toka</button></div>';document.getElementById('lo').onclick=async()=>{await sb.auth.signOut();boot()};return}
+ S.role=p.data.role;S.name=p.data.full_name||s.user.email;
+ try{await loadAll()}catch(e){note('Imeshindwa kupakia data: '+e.message)}
+ shell();route();
+}
+function shell(){
+ root.innerHTML='<div class="app"><aside><h1>EAGLE EMERGENCY SECURITY</h1><small>Dashibodi ya Usimamizi</small>'+NAV.filter(n=>!n[2]||isA()).map(n=>'<a href="#'+n[0]+'" data-v="'+n[0]+'">'+n[1]+'</a>').join('')+'<div class="me"><span>'+esc(S.name)+' ('+(isA()?'Msimamizi mkuu':'Msimamizi wa kituo')+')</span><br><button id="lo">Toka</button></div></aside><main><div id="msg"></div><div id="view"></div></main></div>';
+ document.getElementById('lo').onclick=async()=>{await sb.auth.signOut();boot()};
+ document.getElementById('view').addEventListener('click',onClick);
+}
+function formHtml(){
+ const f=S.form;if(!f)return '';
+ return '<div class="c" style="margin-bottom:16px"><h3>'+esc(f.title)+'</h3><div class="f">'+f.fields.map(x=>'<div><label for="f_'+x.k+'">'+esc(x.l)+'</label>'+(x.t==='select'?'<select id="f_'+x.k+'">'+x.o.map(o=>'<option value="'+esc(o[0])+'"'+(String(f.v[x.k]==null?'':f.v[x.k])===String(o[0])?' selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select>':'<input id="f_'+x.k+'" type="'+x.t+'" value="'+esc(f.v[x.k])+'"'+(x.t==='number'?' min="0"':'')+'>')+'</div>').join('')+'</div><button class="b" data-a="save">Hifadhi</button> <button class="b2" data-a="cancel">Ghairi</button></div>';
+}
+const V={
+muhtasari(){
+ const un=S.inv.filter(p=>!p.paid_at),late=un.filter(p=>p.due_date<today()),t=today(),r=rateOn(t);
+ let bars='';const nm=['Jpl','Jtt','Jnn','Jtn','Alh','Ijm','Jms'];
+ for(let i=6;i>=0;i--){const d=addDays(t,-i),v=rateOn(d);bars+='<div><i style="height:'+(v==null?2:v*1.2)+'px"></i>'+(v==null?'—':v+'%')+'<br>'+nm[new Date(d+'T12:00:00').getDay()]+'</div>'}
+ const soon=S.contracts.filter(k=>k.end_date&&k.end_date<addDays(t,120));
+ let h='<h2>Muhtasari</h2><div class="g"><div class="c k"><b>'+activeG().length+'</b><span>Walinzi kazini</span></div><div class="c k"><b>'+(r==null?'—':r+'%')+'</b><span>Mahudhurio leo</span></div>';
+ if(isA())h+='<div class="c k"><b>'+S.contracts.filter(k=>!k.end_date||k.end_date>=t).length+'</b><span>Mikataba hai</span></div><div class="c k"><b>'+fm(un.reduce((s,p)=>s+Number(p.amount),0))+'</b><span>Malipo yanayosubiriwa</span></div>';
+ h+='</div><div class="g2"><div class="c"><h3>Mahudhurio siku 7</h3><div class="bars">'+bars+'</div></div>';
+ if(isA())h+='<div class="c"><h3>Inahitaji uangalizi</h3>'+((soon.length+late.length)?'<ul>'+soon.map(k=>'<li><span>Mkataba: '+esc(cname(k.client_id))+'</span>'+cst(k.end_date)+'</li>').join('')+late.map(p=>'<li><span>Malipo: '+esc(cname(p.client_id))+' ('+fm(p.amount)+')</span>'+pill('Imechelewa','bd')+'</li>').join('')+'</ul>':'<div class="empty">Hakuna kinachohitaji uangalizi.</div>')+'</div>';
+ return h+'</div>';
+},
+walinzi(){
+ const q=S.q.toLowerCase(),rows=S.guards.filter(g=>(g.full_name+cname(g.client_id)+g.code).toLowerCase().includes(q));
+ return '<h2>Walinzi</h2><div class="bar"><input id="q" placeholder="Tafuta mlinzi au kituo" value="'+esc(S.q)+'" aria-label="Tafuta">'+(isA()?'<button class="b" data-a="gnew">Ongeza mlinzi</button>':'')+'</div>'+formHtml()+'<div class="c wrap"><table><tr><th>Namba</th><th>Jina</th><th>Simu</th><th>Kituo</th><th>Hali</th><th></th></tr>'+rows.map(g=>'<tr><td>'+esc(g.code)+'</td><td>'+esc(g.full_name)+'</td><td>'+esc(g.phone||'—')+'</td><td>'+esc(cname(g.client_id))+'</td><td>'+pill(g.status,g.status==='Kazini'?'ok':g.status==='Likizo'?'wn':'bd')+'</td><td>'+(isA()?'<button class="b2" data-a="gedit" data-id="'+g.id+'">Hariri</button>':'')+'</td></tr>').join('')+'</table>'+(rows.length?'':'<div class="empty">Hakuna walinzi bado.</div>')+'</div>';
+},
+mikataba(){
+ return '<h2>Wateja na Mikataba</h2><div class="bar"><button class="b" data-a="cnew">Ongeza mteja</button></div>'+formHtml()+'<div class="c wrap"><table><tr><th>Mteja</th><th>Walinzi</th><th>Ada kwa mwezi</th><th>Inaisha</th><th>Hali</th><th></th></tr>'+S.clients.map(c=>{const k=ctr(c.id);return '<tr><td>'+esc(c.name)+'</td><td>'+esc(k.guards_required==null?'—':k.guards_required)+'</td><td>'+(k.monthly_fee==null?'—':fm(k.monthly_fee))+'</td><td>'+(k.end_date?esc(k.end_date)+' ('+(dleft(k.end_date)<0?'imeisha':'siku '+dleft(k.end_date))+')':'—')+'</td><td>'+cst(k.end_date)+'</td><td><button class="b2" data-a="cedit" data-id="'+c.id+'">Hariri</button></td></tr>'}).join('')+'</table>'+(S.clients.length?'':'<div class="empty">Hakuna wateja bado. Anza kwa kuongeza mteja.</div>')+'</div>';
+},
+mahudhurio(){
+ const m=attOn(S.date),a=activeG(),cnt=k=>a.filter(g=>m[g.id]===k).length,L=[['P','Yupo'],['L','Amechelewa'],['A','Hayupo']];
+ return '<h2>Mahudhurio</h2><div class="bar"><label for="dt">Tarehe</label><input id="dt" type="date" value="'+S.date+'" max="'+today()+'" style="max-width:200px"></div><div class="g"><div class="c k"><b>'+cnt('P')+'</b><span>Wapo</span></div><div class="c k"><b>'+cnt('L')+'</b><span>Wamechelewa</span></div><div class="c k"><b>'+cnt('A')+'</b><span>Hawapo</span></div><div class="c k"><b>'+a.filter(g=>!m[g.id]).length+'</b><span>Bado kuwekwa</span></div></div><div class="c wrap"><table><tr><th>Mlinzi</th><th>Kituo</th><th>Hali</th></tr>'+a.map(g=>'<tr><td>'+esc(g.full_name)+'</td><td>'+esc(cname(g.client_id))+'</td><td>'+L.map(l=>'<button class="b2'+(m[g.id]===l[0]?' on':'')+'" data-a="att" data-id="'+g.id+'" data-s="'+l[0]+'">'+l[1]+'</button>').join(' ')+'</td></tr>').join('')+'</table>'+(a.length?'':'<div class="empty">Hakuna walinzi walio kazini.</div>')+'</div>';
+},
+malipo(){
+ return '<h2>Malipo</h2><div class="bar"><button class="b" data-a="inew">Ongeza ankara</button></div>'+formHtml()+'<div class="c wrap"><table><tr><th>Mteja</th><th>Kiasi</th><th>Tarehe ya mwisho</th><th>Maelezo</th><th>Hali</th><th></th></tr>'+S.inv.map(p=>'<tr><td>'+esc(cname(p.client_id))+'</td><td>'+fm(p.amount)+'</td><td>'+esc(p.due_date)+'</td><td>'+esc(p.note||'')+'</td><td>'+payst(p)+'</td><td>'+(p.paid_at?'':'<button class="b2" data-a="pay" data-id="'+p.id+'">Weka imelipwa</button>')+'</td></tr>').join('')+'</table>'+(S.inv.length?'':'<div class="empty">Hakuna ankara bado.</div>')+'</div>';
+}};
+function route(){
+ let v=location.hash.slice(1);const ok=NAV.filter(n=>!n[2]||isA()).map(n=>n[0]);if(!ok.includes(v))v='muhtasari';S.view=v;
+ const m=document.getElementById('msg');m.innerHTML=S.msg?'<div class="msg '+S.msg.k+'">'+esc(S.msg.t)+'</div>':'';S.msg=null;
+ document.getElementById('view').innerHTML=V[v]();
+ [].forEach.call(document.querySelectorAll('aside a'),a=>a.classList.toggle('on',a.dataset.v===v));
+ const q=document.getElementById('q');if(q)q.addEventListener('input',()=>{S.q=q.value;const p=q.selectionStart;route();const n=document.getElementById('q');n.focus();n.setSelectionRange(p,p)});
+ const dt=document.getElementById('dt');if(dt)dt.addEventListener('change',async()=>{if(!dt.value)return;S.date=dt.value;try{await loadAll()}catch(e){note(e.message)}route()});
+}
+const val=k=>{const e=document.getElementById('f_'+k);return e?e.value.trim():''};
+const nextCode=()=>'EE-'+String(S.guards.reduce((m,g)=>Math.max(m,parseInt(String(g.code||'').replace(/\D/g,''))||0),0)+1).padStart(3,'0');
+const clientOpts=(none)=>(none?[['', '— hakuna —']]:[]).concat(S.clients.map(c=>[c.id,c.name]));
+async function onClick(e){
+ const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,id=b.dataset.id;
+ try{
+ if(a==='cancel'){S.form=null}
+ else if(a==='gnew'||a==='gedit'){const g=a==='gedit'?S.guards.find(x=>x.id===id):{status:'Kazini'};S.form={kind:'g',id:a==='gedit'?id:null,title:a==='gedit'?'Hariri mlinzi':'Mlinzi mpya',v:g,fields:[{k:'full_name',l:'Jina kamili',t:'text'},{k:'phone',l:'Simu',t:'text'},{k:'client_id',l:'Kituo (mteja)',t:'select',o:clientOpts(true)},{k:'status',l:'Hali',t:'select',o:[['Kazini','Kazini'],['Likizo','Likizo'],['Amesimamishwa','Amesimamishwa']]}]}}
+ else if(a==='cnew'||a==='cedit'){const c=a==='cedit'?S.clients.find(x=>x.id===id):{},k=a==='cedit'?ctr(id):{};S.form={kind:'c',id:a==='cedit'?id:null,title:a==='cedit'?'Hariri mteja':'Mteja mpya',v:{name:c.name,guards_required:k.guards_required,monthly_fee:k.monthly_fee,end_date:k.end_date},fields:[{k:'name',l:'Jina la mteja',t:'text'},{k:'guards_required',l:'Walinzi wanaohitajika',t:'number'},{k:'monthly_fee',l:'Ada kwa mwezi (TSh)',t:'number'},{k:'end_date',l:'Mkataba unaisha',t:'date'}]}}
+ else if(a==='inew'){if(!S.clients.length){note('Ongeza mteja kwanza.');route();return}S.form={kind:'i',title:'Ankara mpya',v:{due_date:addDays(today(),30)},fields:[{k:'client_id',l:'Mteja',t:'select',o:clientOpts()},{k:'amount',l:'Kiasi (TSh)',t:'number'},{k:'due_date',l:'Tarehe ya mwisho',t:'date'},{k:'note',l:'Maelezo (si lazima)',t:'text'}]}}
+ else if(a==='save'){await save();return}
+ else if(a==='att'){const r=await sb.from('attendance').upsert({guard_id:id,work_date:S.date,status:b.dataset.s},{onConflict:'guard_id,work_date'});if(r.error)throw r.error;const i=S.att.findIndex(x=>x.guard_id===id&&x.work_date===S.date);if(i>-1)S.att[i].status=b.dataset.s;else S.att.push({guard_id:id,work_date:S.date,status:b.dataset.s})}
+ else if(a==='pay'){const r=await sb.from('invoices').update({paid_at:today()}).eq('id',id);if(r.error)throw r.error;await loadAll()}
+ }catch(x){note('Imeshindwa: '+x.message)}
+ route();
+}
+async function save(){
+ const f=S.form;let err=null;
+ if(f.kind==='g'){const n=val('full_name');if(n.length<2){note('Andika jina la mlinzi.');return route()}
+  const row={full_name:n,phone:val('phone')||null,client_id:val('client_id')||null,status:val('status')};
+  const r=f.id?await sb.from('guards').update(row).eq('id',f.id):await sb.from('guards').insert(Object.assign({code:nextCode()},row));err=r.error}
+ if(f.kind==='c'){const n=val('name');if(n.length<2){note('Andika jina la mteja.');return route()}
+  const k={guards_required:Number(val('guards_required'))||0,monthly_fee:Number(val('monthly_fee'))||0,end_date:val('end_date')||null};
+  let cid=f.id;
+  if(cid){const r=await sb.from('clients').update({name:n}).eq('id',cid);err=r.error}
+  else{const r=await sb.from('clients').insert({name:n}).select().single();err=r.error;if(!err)cid=r.data.id}
+  if(!err){const r=await sb.from('contracts').upsert(Object.assign({client_id:cid},k),{onConflict:'client_id'});err=r.error}}
+ if(f.kind==='i'){const am=Number(val('amount'));if(!(am>0)||!val('due_date')){note('Weka kiasi na tarehe ya mwisho.');return route()}
+  const r=await sb.from('invoices').insert({client_id:val('client_id'),amount:am,due_date:val('due_date'),note:val('note')||null});err=r.error}
+ if(err){note('Imeshindwa kuhifadhi: '+err.message);return route()}
+ S.form=null;try{await loadAll()}catch(x){note(x.message)}
+ if(!S.msg)note('Imehifadhiwa.','o');route();
+}
+addEventListener('hashchange',()=>{if(S.uid&&document.getElementById('view'))route()});
+boot();
+})();
+</script>
+</body>
+</html>
