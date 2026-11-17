@@ -56,6 +56,15 @@ li{padding:10px 0;border-bottom:1px solid var(--line);display:flex;justify-conte
 .login{max-width:400px;margin:12vh auto;padding:28px}
 .login .f{grid-template-columns:1fr}
 .empty{color:var(--dim);padding:16px 0}
+.sheet{background:#fff;color:#111;padding:32px;border:1px solid #ccc;max-width:860px;margin:0 auto;font-size:14px;line-height:1.5}
+.sheet table{min-width:0}
+.sheet th{color:#444;border-bottom:2px solid #111;white-space:normal}
+.sheet td{border-bottom:1px solid #ddd;white-space:normal;color:#111}
+.sheet h4{margin:18px 0 6px}
+.sheet .tot{margin-left:auto;width:300px;max-width:100%}
+.sheet .tot td{border:0;padding:4px 0}
+.sig{display:flex;gap:40px;margin-top:48px}.sig div{flex:1;border-top:1px solid #111;padding-top:6px}
+@media print{aside,.noprint,#msg,body::before{display:none!important}body{background:#fff;padding:0}.app{display:block}main{padding:0}.sheet{border:0;padding:0;max-width:none}}
 @media(max-width:820px){
 .app{grid-template-columns:1fr}
 aside{height:auto;flex-direction:row;overflow-x:auto;padding:8px;gap:4px;z-index:5}
@@ -82,23 +91,25 @@ const fm=n=>'TSh '+Number(n||0).toLocaleString('en-US');
 const pill=(t,c)=>'<span class="p '+c+'">'+esc(t)+'</span>';
 if(!cfg.url||/PASTE/.test(cfg.url)||!window.supabase){root.innerHTML='<div class="login c"><h2>Dashibodi haijaunganishwa</h2><p>Weka anwani ya Supabase na ufunguo wa umma (anon) kwenye faili <b>config.js</b>, kisha pakia ukurasa upya.</p></div>';return}
 const sb=supabase.createClient(cfg.url,cfg.key);
-const S={uid:null,role:null,name:'',guards:[],clients:[],contracts:[],inv:[],att:[],date:today(),q:'',form:null,msg:null,view:'muhtasari'};
+const S={uid:null,role:null,name:'',guards:[],clients:[],contracts:[],docs:[],items:[],moves:[],set:{company:{},banks:[],mobile:[]},df:null,docv:null,att:[],date:today(),q:'',form:null,msg:null,view:'muhtasari'};
 const isA=()=>S.role==='admin';
-const NAV=[['muhtasari','Muhtasari'],['walinzi','Walinzi'],['mikataba','Wateja na Mikataba',1],['mahudhurio','Mahudhurio'],['malipo','Malipo',1]];
+const NAV=[['muhtasari','Muhtasari'],['walinzi','Walinzi'],['mikataba','Wateja na Mikataba',1],['mahudhurio','Mahudhurio'],['nukuu','Nukuu za Bei',1],['ankara','Ankara',1],['hati','Hati za Kukabidhi',1],['risiti','Risiti',1],['stoo','Stoo',1],['mipangilio','Mipangilio',1]];
+const DT={quotation:{p:'QT',n:'Nukuu ya Bei',pl:'Nukuu za Bei'},invoice:{p:'INV',n:'Ankara',pl:'Ankara'},delivery_note:{p:'DN',n:'Hati ya Kukabidhi',pl:'Hati za Kukabidhi'},receipt:{p:'RCT',n:'Risiti',pl:'Risiti'}};
+const PM=['Pesa taslimu','Benki','M-Pesa','Tigo Pesa','Airtel Money','HaloPesa'];
 const cname=id=>{const c=S.clients.find(x=>x.id===id);return c?c.name:'Hakuna kituo'};
 const ctr=id=>S.contracts.find(x=>x.client_id===id)||{};
 const activeG=()=>S.guards.filter(g=>g.status==='Kazini');
 const attOn=d=>{const m={};S.att.filter(a=>a.work_date===d).forEach(a=>m[a.guard_id]=a.status);return m};
 const rateOn=d=>{const m=attOn(d),a=activeG(),n=a.filter(g=>m[g.id]).length;if(!n)return null;return Math.round(a.filter(g=>m[g.id]&&m[g.id]!=='A').length*100/a.length)};
-const payst=p=>p.paid_at?pill('Imelipwa','ok'):p.due_date<today()?pill('Imechelewa','bd'):pill('Inasubiri','wn');
 const cst=e=>!e?pill('Hakuna tarehe','wn'):e<today()?pill('Imeisha','bd'):e<addDays(today(),60)?pill('Inaisha karibu','wn'):pill('Hai','ok');
 const dleft=e=>Math.round((new Date(e+'T12:00:00')-new Date(today()+'T12:00:00'))/864e5);
 function note(t,k){S.msg={t:t,k:k||'e'}}
 async function loadAll(){
- const d6=addDays(today(),-6),from=S.date<d6?S.date:d6,off={data:[],error:null};
- const r=await Promise.all([sb.from('guards').select('*').order('code'),sb.from('clients').select('*').order('name'),sb.from('attendance').select('guard_id,work_date,status').gte('work_date',from).lte('work_date',today()),isA()?sb.from('contracts').select('*'):off,isA()?sb.from('invoices').select('*').order('due_date'):off]);
+ const d6=addDays(today(),-6),from=S.date<d6?S.date:d6,off={data:[],error:null},A=isA();
+ const r=await Promise.all([sb.from('guards').select('*').order('code'),sb.from('clients').select('*').order('name'),sb.from('attendance').select('guard_id,work_date,status').gte('work_date',from).lte('work_date',today()),A?sb.from('contracts').select('*'):off,A?sb.from('documents').select('*').order('created_at'):off,A?sb.from('stock_items').select('*').order('name'):off,A?sb.from('stock_moves').select('*').order('move_date',{ascending:false}):off,A?sb.from('settings').select('*').eq('id',1).maybeSingle():{data:null,error:null}]);
  r.forEach(x=>{if(x.error)throw x.error});
- S.guards=r[0].data;S.clients=r[1].data;S.att=r[2].data;S.contracts=r[3].data;S.inv=r[4].data;
+ S.guards=r[0].data;S.clients=r[1].data;S.att=r[2].data;S.contracts=r[3].data;S.docs=r[4].data;S.items=r[5].data;S.moves=r[6].data;
+ if(r[7].data)S.set={company:r[7].data.company||{},banks:r[7].data.banks||[],mobile:r[7].data.mobile||[]};
 }
 function loginView(m){
  root.innerHTML='<div class="login c"><h2>Dashibodi ya Eagle</h2><p style="color:var(--dim)">Ingia kwa barua pepe na nenosiri ulilopewa.</p>'+(m?'<div class="msg e">'+esc(m)+'</div>':'')+'<form id="lf" class="f"><div><label for="em">Barua pepe</label><input id="em" type="email" autocomplete="username" required></div><div><label for="pw">Nenosiri</label><input id="pw" type="password" autocomplete="current-password" required></div><button class="b" type="submit">Ingia</button></form><p style="color:var(--dim);font-size:13px">Akaunti mpya zinatengenezwa na msimamizi mkuu pekee.</p></div>';
@@ -122,36 +133,82 @@ function formHtml(){
  const f=S.form;if(!f)return '';
  return '<div class="c" style="margin-bottom:16px"><h3>'+esc(f.title)+'</h3><div class="f">'+f.fields.map(x=>'<div><label for="f_'+x.k+'">'+esc(x.l)+'</label>'+(x.t==='select'?'<select id="f_'+x.k+'">'+x.o.map(o=>'<option value="'+esc(o[0])+'"'+(String(f.v[x.k]==null?'':f.v[x.k])===String(o[0])?' selected':'')+'>'+esc(o[1])+'</option>').join('')+'</select>':'<input id="f_'+x.k+'" type="'+x.t+'" value="'+esc(f.v[x.k])+'"'+(x.t==='number'?' min="0"':'')+'>')+'</div>').join('')+'</div><button class="b" data-a="save">Hifadhi</button> <button class="b2" data-a="cancel">Ghairi</button></div>';
 }
+const sumItems=d=>(d.items||[]).reduce((s,i)=>s+(Number(i.qty)||0)*(Number(i.price)||0),0);
+const totals=d=>{const sub=sumItems(d),disc=Number(d.discount)||0,base=Math.max(sub-disc,0),vat=base*(Number(d.vat_percent)||0)/100;return{sub:sub,disc:disc,vat:vat,total:base+vat}};
+const paidOf=inv=>S.docs.filter(r=>r.doc_type==='receipt'&&r.parent_id===inv.id&&r.status!=='cancelled').reduce((s,r)=>s+Number(r.amount_paid),0);
+const invInfo=inv=>{const t=totals(inv).total,p=paidOf(inv);return{total:t,paid:p,bal:Math.max(t-p,0)}};
+const openInv=()=>S.docs.filter(d=>d.doc_type==='invoice'&&d.status==='sent'&&invInfo(d).bal>0);
+const dstat=d=>{if(d.status==='cancelled')return pill('Imeghairiwa','bd');
+ if(d.doc_type==='invoice'&&d.status!=='draft'){const i=invInfo(d);if(i.bal<=0&&i.total>0)return pill('Imelipwa','ok');if(d.due_date&&d.due_date<today())return pill('Imechelewa','bd');return pill(i.paid>0?'Imelipwa kiasi':'Inasubiri','wn')}
+ const m={draft:['Rasimu','wn'],sent:[d.doc_type==='quotation'?'Imetumwa':d.doc_type==='delivery_note'?'Imekabidhiwa':'Imetolewa','ok'],accepted:['Imekubaliwa','ok'],rejected:['Imekataliwa','bd']}[d.status]||[d.status,'wn'];return pill(m[0],m[1])};
+const nextNo=t=>{const p=DT[t].p+'-'+new Date().getFullYear()+'-';return p+String(S.docs.filter(d=>d.doc_number.startsWith(p)).reduce((m,d)=>Math.max(m,parseInt(d.doc_number.slice(p.length))||0),0)+1).padStart(4,'0')};
+const onHand=id=>S.moves.filter(m=>m.item_id===id).reduce((s,m)=>s+(m.kind==='out'?-1:1)*Number(m.qty),0);
+function docList(t){const rows=S.docs.filter(d=>d.doc_type===t).sort((a,b)=>b.doc_number.localeCompare(a.doc_number)),dn=t==='delivery_note';
+ return '<h2>'+DT[t].pl+'</h2><div class="bar"><button class="b" data-a="dnew" data-t="'+t+'">'+(t==='receipt'?'Risiti mpya':'Mpya')+'</button></div>'+(S.df&&S.df.t===t?dformHtml():'')+'<div class="c wrap"><table><tr><th>Namba</th><th>Mteja</th><th>Tarehe</th>'+(dn?'':'<th>Jumla</th>')+'<th>Hali</th><th></th></tr>'+rows.map(d=>'<tr><td>'+esc(d.doc_number)+'</td><td>'+esc(cname(d.client_id))+'</td><td>'+esc(d.issue_date)+'</td>'+(dn?'':'<td>'+fm(t==='receipt'?d.amount_paid:totals(d).total)+'</td>')+'<td>'+dstat(d)+'</td><td><button class="b2" data-a="dview" data-id="'+d.id+'">Fungua</button> '+(t!=='receipt'&&d.status!=='cancelled'?'<button class="b2" data-a="dedit" data-id="'+d.id+'">Hariri</button> ':'')+(d.status==='draft'||d.status==='cancelled'?'<button class="b2" data-a="ddel" data-id="'+d.id+'">Futa</button>':'')+'</td></tr>').join('')+'</table>'+(rows.length?'':'<div class="empty">Hakuna bado.</div>')+'</div>'}
+function dformHtml(){const f=S.df,t=f.t,v=f.v,it=f.items||[];
+ const inp=(k,l,ty,x)=>'<div><label for="d_'+k+'">'+l+'</label><input id="d_'+k+'" type="'+ty+'" value="'+esc(v[k]==null?'':v[k])+'"'+(x||'')+'></div>';
+ let h='<div class="c" style="margin-bottom:16px"><h3>'+(f.id?'Hariri: ':'Mpya: ')+DT[t].n+'</h3>';
+ if(t==='receipt'){const inv=S.docs.filter(d=>d.doc_type==='invoice'&&((d.status==='sent'&&invInfo(d).bal>0)||d.id===v.parent_id));
+  h+='<div class="f"><div><label for="d_parent_id">Ankara inayolipwa</label><select id="d_parent_id">'+inv.map(d=>'<option value="'+d.id+'"'+(v.parent_id===d.id?' selected':'')+'>'+esc(d.doc_number+' - '+cname(d.client_id)+' (salio '+fm(invInfo(d).bal)+')')+'</option>').join('')+'</select></div>'+inp('issue_date','Tarehe','date')+inp('amount_paid','Kiasi kilicholipwa (TSh)','number',' min="0"')+'<div><label for="d_pay_method">Njia ya malipo</label><select id="d_pay_method">'+PM.map(m=>'<option'+(v.pay_method===m?' selected':'')+'>'+m+'</option>').join('')+'</select></div>'+inp('pay_ref','Kumbukumbu / namba ya muamala','text')+'</div>'}
+ else{h+='<div class="f"><div><label for="d_client_id">Mteja</label><select id="d_client_id">'+S.clients.map(c=>'<option value="'+c.id+'"'+(v.client_id===c.id?' selected':'')+'>'+esc(c.name)+'</option>').join('')+'</select></div>'+inp('issue_date','Tarehe','date')+(t==='delivery_note'?'':inp('due_date',t==='invoice'?'Tarehe ya mwisho ya kulipa':'Inatumika hadi','date')+inp('vat_percent','VAT %','number',' min="0"')+inp('discount','Punguzo (TSh)','number',' min="0"'))+'</div><div class="wrap"><table><tr><th>Maelezo</th><th>Idadi</th>'+(t==='delivery_note'?'':'<th>Bei (TSh)</th>')+'<th></th></tr>'+it.map((x,i)=>'<tr><td><input data-i="'+i+'" data-k="desc" aria-label="Maelezo" value="'+esc(x.desc)+'"></td><td><input data-i="'+i+'" data-k="qty" type="number" min="0" aria-label="Idadi" value="'+esc(x.qty)+'" style="width:90px"></td>'+(t==='delivery_note'?'':'<td><input data-i="'+i+'" data-k="price" type="number" min="0" aria-label="Bei" value="'+esc(x.price)+'" style="width:140px"></td>')+'<td><button class="b2" data-a="ditem-" data-i="'+i+'" aria-label="Ondoa kipengee">Ondoa</button></td></tr>').join('')+'</table></div><p><button class="b2" data-a="ditem+">+ Ongeza kipengee</button></p><div class="f">'+inp('notes','Maelezo ya ziada','text')+'</div>'}
+ return h+'<button class="b" data-a="dsave">Hifadhi</button> <button class="b2" data-a="dcancel">Ghairi</button></div>'}
+function readDf(){const f=S.df;if(!f)return;['client_id','issue_date','due_date','vat_percent','discount','notes','parent_id','amount_paid','pay_method','pay_ref'].forEach(k=>{const e=document.getElementById('d_'+k);if(e)f.v[k]=e.value});[].forEach.call(document.querySelectorAll('[data-i][data-k]:not([data-g])'),e=>{f.items[+e.dataset.i][e.dataset.k]=e.value})}
+function readSet(){const c={};['name','address','phone','email','tin','notes'].forEach(k=>{const e=document.getElementById('st_'+k);if(e)c[k]=e.value.trim()});S.set.company=c;[].forEach.call(document.querySelectorAll('[data-g]'),e=>{const a=S.set[e.dataset.g];if(a&&a[+e.dataset.i])a[+e.dataset.i][e.dataset.k]=e.value.trim()})}
+function sheet(d){const c=S.set.company||{},cl=S.clients.find(x=>x.id===d.client_id)||{},t=d.doc_type,tt=totals(d),inv=S.docs.find(x=>x.id===d.parent_id);
+ let h='<div class="sheet"><div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap"><div><b style="font-size:20px">'+esc(c.name||'EAGLE EMERGENCY SECURITY (T) LIMITED')+'</b><br>'+esc(c.address||'')+'<br>'+esc([c.phone,c.email].filter(Boolean).join(' | '))+(c.tin?'<br>TIN: '+esc(c.tin):'')+'</div><div style="text-align:right"><b style="font-size:24px;letter-spacing:1px">'+DT[t].n.toUpperCase()+'</b><br>Namba: '+esc(d.doc_number)+'<br>Tarehe: '+esc(d.issue_date)+(d.due_date?'<br>'+(t==='invoice'?'Mwisho wa kulipa: ':'Inatumika hadi: ')+esc(d.due_date):'')+(d.status==='cancelled'?'<br><b>IMEGHAIRIWA</b>':'')+'</div></div><h4>'+(t==='receipt'?'Imepokelewa kutoka kwa':t==='delivery_note'?'Imekabidhiwa kwa':'Kwa')+'</h4><b>'+esc(cl.name||'')+'</b>';
+ if(t==='receipt'){const i=inv?invInfo(inv):{total:0,paid:0,bal:0};h+='<table style="margin-top:16px"><tr><td>Kiasi kilicholipwa</td><td><b>'+fm(d.amount_paid)+'</b></td></tr><tr><td>Njia ya malipo</td><td>'+esc(d.pay_method||'')+'</td></tr><tr><td>Kumbukumbu</td><td>'+esc(d.pay_ref||'—')+'</td></tr><tr><td>Kwa ankara namba</td><td>'+esc(inv?inv.doc_number:'—')+'</td></tr><tr><td>Jumla ya ankara</td><td>'+fm(i.total)+'</td></tr><tr><td>Jumla iliyolipwa hadi sasa</td><td>'+fm(i.paid)+'</td></tr><tr><td>Salio</td><td><b>'+fm(i.bal)+'</b></td></tr></table>'}
+ else{const dn=t==='delivery_note';h+='<table style="margin-top:16px"><tr><th>#</th><th>Maelezo</th><th>Idadi</th>'+(dn?'':'<th>Bei</th><th>Jumla</th>')+'</tr>'+(d.items||[]).map((x,i)=>'<tr><td>'+(i+1)+'</td><td>'+esc(x.desc)+'</td><td>'+esc(x.qty)+'</td>'+(dn?'':'<td>'+fm(x.price)+'</td><td>'+fm(x.qty*x.price)+'</td>')+'</tr>').join('')+'</table>';
+  if(!dn)h+='<table class="tot"><tr><td>Jumla ndogo</td><td style="text-align:right">'+fm(tt.sub)+'</td></tr>'+(tt.disc?'<tr><td>Punguzo</td><td style="text-align:right">-'+fm(tt.disc)+'</td></tr>':'')+(Number(d.vat_percent)?'<tr><td>VAT '+esc(d.vat_percent)+'%</td><td style="text-align:right">'+fm(tt.vat)+'</td></tr>':'')+'<tr><td><b>JUMLA</b></td><td style="text-align:right"><b>'+fm(tt.total)+'</b></td></tr>'+(t==='invoice'&&d.status!=='draft'?'<tr><td>Imelipwa</td><td style="text-align:right">'+fm(invInfo(d).paid)+'</td></tr><tr><td><b>SALIO</b></td><td style="text-align:right"><b>'+fm(invInfo(d).bal)+'</b></td></tr>':'')+'</table>'}
+ const bk=S.set.banks||[],mm=S.set.mobile||[];
+ if((t==='invoice'||t==='quotation')&&(bk.length||mm.length))h+='<h4>Njia za Malipo</h4>'+bk.map(b=>'Benki: <b>'+esc(b.bank)+'</b> | Jina la akaunti: '+esc(b.account_name)+' | Namba: <b>'+esc(b.account_no)+'</b>'+(b.branch?' | Tawi: '+esc(b.branch):'')).join('<br>')+(bk.length&&mm.length?'<br>':'')+mm.map(m=>esc(m.provider)+': <b>'+esc(m.number)+'</b>'+(m.name?' | Jina: '+esc(m.name):'')).join('<br>');
+ if(d.notes)h+='<h4>Maelezo</h4>'+esc(d.notes);
+ if(t==='delivery_note')h+='<div class="sig"><div>Imekabidhiwa na (jina, sahihi)</div><div>Imepokelewa na (jina, sahihi, tarehe)</div></div>';
+ if(c.notes)h+='<p style="margin-top:28px;color:#444">'+esc(c.notes)+'</p>';
+ return h+'</div>'}
+function sheetView(d){const t=d.doc_type,s=d.status,bt=(a,l,x)=>'<button class="b2" data-a="'+a+'" data-id="'+d.id+'"'+(x||'')+'>'+l+'</button> ';
+ let tb='<div class="bar noprint"><button class="b2" data-a="dback">← Rudi</button><button class="b" data-a="print">Chapisha / Pakua PDF</button>';
+ if(t==='quotation'){if(s==='draft')tb+=bt('dstat','Weka imetumwa',' data-s="sent"');if(s==='sent')tb+=bt('dstat','Imekubaliwa',' data-s="accepted"')+bt('dstat','Imekataliwa',' data-s="rejected"');if(s!=='cancelled')tb+=bt('dconv','Tengeneza Ankara',' data-to="invoice"')}
+ if(t==='invoice'){if(s==='draft')tb+=bt('dstat','Toa ankara (imetumwa)',' data-s="sent"');if(s==='sent'&&invInfo(d).bal>0)tb+=bt('drcpt','Pokea malipo');if(s!=='cancelled')tb+=bt('dconv','Tengeneza Hati ya Kukabidhi',' data-to="delivery_note"')}
+ if(t==='delivery_note'&&s==='draft')tb+=bt('dstat','Weka imekabidhiwa',' data-s="sent"');
+ if(s!=='cancelled'&&s!=='draft')tb+=bt('dstat','Ghairi',' data-s="cancelled"');
+ return tb+'</div>'+sheet(d)}
 const V={
 muhtasari(){
- const un=S.inv.filter(p=>!p.paid_at),late=un.filter(p=>p.due_date<today()),t=today(),r=rateOn(t);
+ const un=openInv().map(d=>({client_id:d.client_id,due_date:d.due_date,bal:invInfo(d).bal})),late=un.filter(p=>p.due_date&&p.due_date<today()),t=today(),r=rateOn(t);
  let bars='';const nm=['Jpl','Jtt','Jnn','Jtn','Alh','Ijm','Jms'];
  for(let i=6;i>=0;i--){const d=addDays(t,-i),v=rateOn(d);bars+='<div><i style="height:'+(v==null?2:v*1.2)+'px"></i>'+(v==null?'—':v+'%')+'<br>'+nm[new Date(d+'T12:00:00').getDay()]+'</div>'}
  const soon=S.contracts.filter(k=>k.end_date&&k.end_date<addDays(t,120));
  let h='<h2>Muhtasari</h2><div class="g"><div class="c k"><b>'+activeG().length+'</b><span>Walinzi kazini</span></div><div class="c k"><b>'+(r==null?'—':r+'%')+'</b><span>Mahudhurio leo</span></div>';
- if(isA())h+='<div class="c k"><b>'+S.contracts.filter(k=>!k.end_date||k.end_date>=t).length+'</b><span>Mikataba hai</span></div><div class="c k"><b>'+fm(un.reduce((s,p)=>s+Number(p.amount),0))+'</b><span>Malipo yanayosubiriwa</span></div>';
+ if(isA())h+='<div class="c k"><b>'+S.contracts.filter(k=>!k.end_date||k.end_date>=t).length+'</b><span>Mikataba hai</span></div><div class="c k"><b>'+fm(un.reduce((s,p)=>s+p.bal,0))+'</b><span>Malipo yanayosubiriwa</span></div>';
  h+='</div><div class="g2"><div class="c"><h3>Mahudhurio siku 7</h3><div class="bars">'+bars+'</div></div>';
- if(isA())h+='<div class="c"><h3>Inahitaji uangalizi</h3>'+((soon.length+late.length)?'<ul>'+soon.map(k=>'<li><span>Mkataba: '+esc(cname(k.client_id))+'</span>'+cst(k.end_date)+'</li>').join('')+late.map(p=>'<li><span>Malipo: '+esc(cname(p.client_id))+' ('+fm(p.amount)+')</span>'+pill('Imechelewa','bd')+'</li>').join('')+'</ul>':'<div class="empty">Hakuna kinachohitaji uangalizi.</div>')+'</div>';
+ if(isA())h+='<div class="c"><h3>Inahitaji uangalizi</h3>'+((soon.length+late.length)?'<ul>'+soon.map(k=>'<li><span>Mkataba: '+esc(cname(k.client_id))+'</span>'+cst(k.end_date)+'</li>').join('')+late.map(p=>'<li><span>Malipo: '+esc(cname(p.client_id))+' ('+fm(p.bal)+')</span>'+pill('Imechelewa','bd')+'</li>').join('')+'</ul>':'<div class="empty">Hakuna kinachohitaji uangalizi.</div>')+'</div>';
  return h+'</div>';
 },
 walinzi(){
  const q=S.q.toLowerCase(),rows=S.guards.filter(g=>(g.full_name+cname(g.client_id)+g.code).toLowerCase().includes(q));
- return '<h2>Walinzi</h2><div class="bar"><input id="q" placeholder="Tafuta mlinzi au kituo" value="'+esc(S.q)+'" aria-label="Tafuta">'+(isA()?'<button class="b" data-a="gnew">Ongeza mlinzi</button>':'')+'</div>'+formHtml()+'<div class="c wrap"><table><tr><th>Namba</th><th>Jina</th><th>Simu</th><th>Kituo</th><th>Hali</th><th></th></tr>'+rows.map(g=>'<tr><td>'+esc(g.code)+'</td><td>'+esc(g.full_name)+'</td><td>'+esc(g.phone||'—')+'</td><td>'+esc(cname(g.client_id))+'</td><td>'+pill(g.status,g.status==='Kazini'?'ok':g.status==='Likizo'?'wn':'bd')+'</td><td>'+(isA()?'<button class="b2" data-a="gedit" data-id="'+g.id+'">Hariri</button>':'')+'</td></tr>').join('')+'</table>'+(rows.length?'':'<div class="empty">Hakuna walinzi bado.</div>')+'</div>';
+ return '<h2>Walinzi</h2><div class="bar"><input id="q" placeholder="Tafuta mlinzi au kituo" value="'+esc(S.q)+'" aria-label="Tafuta">'+(isA()?'<button class="b" data-a="gnew">Ongeza mlinzi</button>':'')+'</div>'+formHtml()+'<div class="c wrap"><table><tr><th>Namba</th><th>Jina</th><th>Simu</th><th>Kituo</th><th>Hali</th><th></th></tr>'+rows.map(g=>'<tr><td>'+esc(g.code)+'</td><td>'+esc(g.full_name)+'</td><td>'+esc(g.phone||'—')+'</td><td>'+esc(cname(g.client_id))+'</td><td>'+pill(g.status,g.status==='Kazini'?'ok':g.status==='Likizo'?'wn':'bd')+'</td><td>'+(isA()?'<button class="b2" data-a="gedit" data-id="'+g.id+'">Hariri</button> <button class="b2" data-a="gdel" data-id="'+g.id+'">Futa</button>':'')+'</td></tr>').join('')+'</table>'+(rows.length?'':'<div class="empty">Hakuna walinzi bado.</div>')+'</div>';
 },
 mikataba(){
- return '<h2>Wateja na Mikataba</h2><div class="bar"><button class="b" data-a="cnew">Ongeza mteja</button></div>'+formHtml()+'<div class="c wrap"><table><tr><th>Mteja</th><th>Walinzi</th><th>Ada kwa mwezi</th><th>Inaisha</th><th>Hali</th><th></th></tr>'+S.clients.map(c=>{const k=ctr(c.id);return '<tr><td>'+esc(c.name)+'</td><td>'+esc(k.guards_required==null?'—':k.guards_required)+'</td><td>'+(k.monthly_fee==null?'—':fm(k.monthly_fee))+'</td><td>'+(k.end_date?esc(k.end_date)+' ('+(dleft(k.end_date)<0?'imeisha':'siku '+dleft(k.end_date))+')':'—')+'</td><td>'+cst(k.end_date)+'</td><td><button class="b2" data-a="cedit" data-id="'+c.id+'">Hariri</button></td></tr>'}).join('')+'</table>'+(S.clients.length?'':'<div class="empty">Hakuna wateja bado. Anza kwa kuongeza mteja.</div>')+'</div>';
+ return '<h2>Wateja na Mikataba</h2><div class="bar"><button class="b" data-a="cnew">Ongeza mteja</button></div>'+formHtml()+'<div class="c wrap"><table><tr><th>Mteja</th><th>Walinzi</th><th>Ada kwa mwezi</th><th>Inaisha</th><th>Hali</th><th></th></tr>'+S.clients.map(c=>{const k=ctr(c.id);return '<tr><td>'+esc(c.name)+'</td><td>'+esc(k.guards_required==null?'—':k.guards_required)+'</td><td>'+(k.monthly_fee==null?'—':fm(k.monthly_fee))+'</td><td>'+(k.end_date?esc(k.end_date)+' ('+(dleft(k.end_date)<0?'imeisha':'siku '+dleft(k.end_date))+')':'—')+'</td><td>'+cst(k.end_date)+'</td><td><button class="b2" data-a="cedit" data-id="'+c.id+'">Hariri</button> <button class="b2" data-a="cdel" data-id="'+c.id+'">Futa</button></td></tr>'}).join('')+'</table>'+(S.clients.length?'':'<div class="empty">Hakuna wateja bado. Anza kwa kuongeza mteja.</div>')+'</div>';
 },
 mahudhurio(){
  const m=attOn(S.date),a=activeG(),cnt=k=>a.filter(g=>m[g.id]===k).length,L=[['P','Yupo'],['L','Amechelewa'],['A','Hayupo']];
  return '<h2>Mahudhurio</h2><div class="bar"><label for="dt">Tarehe</label><input id="dt" type="date" value="'+S.date+'" max="'+today()+'" style="max-width:200px"></div><div class="g"><div class="c k"><b>'+cnt('P')+'</b><span>Wapo</span></div><div class="c k"><b>'+cnt('L')+'</b><span>Wamechelewa</span></div><div class="c k"><b>'+cnt('A')+'</b><span>Hawapo</span></div><div class="c k"><b>'+a.filter(g=>!m[g.id]).length+'</b><span>Bado kuwekwa</span></div></div><div class="c wrap"><table><tr><th>Mlinzi</th><th>Kituo</th><th>Hali</th></tr>'+a.map(g=>'<tr><td>'+esc(g.full_name)+'</td><td>'+esc(cname(g.client_id))+'</td><td>'+L.map(l=>'<button class="b2'+(m[g.id]===l[0]?' on':'')+'" data-a="att" data-id="'+g.id+'" data-s="'+l[0]+'">'+l[1]+'</button>').join(' ')+'</td></tr>').join('')+'</table>'+(a.length?'':'<div class="empty">Hakuna walinzi walio kazini.</div>')+'</div>';
 },
-malipo(){
- return '<h2>Malipo</h2><div class="bar"><button class="b" data-a="inew">Ongeza ankara</button></div>'+formHtml()+'<div class="c wrap"><table><tr><th>Mteja</th><th>Kiasi</th><th>Tarehe ya mwisho</th><th>Maelezo</th><th>Hali</th><th></th></tr>'+S.inv.map(p=>'<tr><td>'+esc(cname(p.client_id))+'</td><td>'+fm(p.amount)+'</td><td>'+esc(p.due_date)+'</td><td>'+esc(p.note||'')+'</td><td>'+payst(p)+'</td><td>'+(p.paid_at?'':'<button class="b2" data-a="pay" data-id="'+p.id+'">Weka imelipwa</button>')+'</td></tr>').join('')+'</table>'+(S.inv.length?'':'<div class="empty">Hakuna ankara bado.</div>')+'</div>';
-}};
+nukuu(){return docList('quotation')},
+ankara(){return docList('invoice')},
+hati(){return docList('delivery_note')},
+risiti(){return docList('receipt')},
+stoo(){return '<h2>Stoo</h2><div class="bar"><button class="b" data-a="snew">Bidhaa mpya</button></div>'+formHtml()+'<div class="c wrap"><table><tr><th>Bidhaa</th><th>Kipimo</th><th>Kilichopo</th><th>Kiwango cha chini</th><th></th></tr>'+S.items.map(i=>{const q=onHand(i.id);return '<tr><td>'+esc(i.name)+'</td><td>'+esc(i.unit)+'</td><td>'+q+' '+(q<=Number(i.reorder_level)?pill('Inaisha','bd'):'')+'</td><td>'+esc(i.reorder_level)+'</td><td><button class="b2" data-a="smove" data-id="'+i.id+'" data-k="in">Pokea</button> <button class="b2" data-a="smove" data-id="'+i.id+'" data-k="out">Toa</button> <button class="b2" data-a="sedit" data-id="'+i.id+'">Hariri</button> <button class="b2" data-a="sdel" data-id="'+i.id+'">Futa</button></td></tr>'}).join('')+'</table>'+(S.items.length?'':'<div class="empty">Hakuna bidhaa bado.</div>')+'</div><h3 style="margin-top:24px">Historia ya hivi karibuni</h3><div class="c wrap"><table><tr><th>Tarehe</th><th>Bidhaa</th><th>Aina</th><th>Idadi</th><th>Maelezo</th><th></th></tr>'+S.moves.slice(0,20).map(m=>'<tr><td>'+esc(m.move_date)+'</td><td>'+esc((S.items.find(i=>i.id===m.item_id)||{}).name||'')+'</td><td>'+({in:'Imeingia',out:'Imetoka',adjust:'Marekebisho'})[m.kind]+'</td><td>'+esc(m.qty)+'</td><td>'+esc(m.note||'')+'</td><td><button class="b2" data-a="mdel" data-id="'+m.id+'">Futa</button></td></tr>').join('')+'</table></div>'},
+mipangilio(){const c=S.set.company||{},inp=(k,l)=>'<div><label for="st_'+k+'">'+l+'</label><input id="st_'+k+'" value="'+esc(c[k])+'"></div>',fld=(g,i,k,l,v)=>'<div><label>'+l+'</label><input data-g="'+g+'" data-i="'+i+'" data-k="'+k+'" value="'+esc(v)+'"></div>';
+ const bk=(S.set.banks||[]).map((b,i)=>'<div class="f">'+fld('banks',i,'bank','Benki',b.bank)+fld('banks',i,'account_name','Jina la akaunti',b.account_name)+fld('banks',i,'account_no','Namba ya akaunti',b.account_no)+fld('banks',i,'branch','Tawi',b.branch)+'<div><button class="b2" data-a="gx" data-g="banks" data-i="'+i+'">Ondoa</button></div></div>').join('');
+ const mm=(S.set.mobile||[]).map((m,i)=>'<div class="f">'+fld('mobile',i,'provider','Mtandao (M-Pesa, Tigo Pesa, Airtel Money, HaloPesa)',m.provider)+fld('mobile',i,'number','Namba / Lipa namba',m.number)+fld('mobile',i,'name','Jina lililosajiliwa',m.name)+'<div><button class="b2" data-a="gx" data-g="mobile" data-i="'+i+'">Ondoa</button></div></div>').join('');
+ return '<h2>Mipangilio ya Kampuni</h2><div class="c"><h3>Taarifa za kampuni (zinaonekana kwenye nyaraka)</h3><div class="f">'+inp('name','Jina la kampuni')+inp('address','Anwani')+inp('phone','Simu')+inp('email','Barua pepe')+inp('tin','TIN')+inp('notes','Maelezo ya chini ya nyaraka')+'</div><h3>Akaunti za benki</h3>'+bk+'<p><button class="b2" data-a="gadd" data-g="banks">+ Ongeza akaunti ya benki</button></p><h3>Pesa ya simu (mobile money)</h3>'+mm+'<p><button class="b2" data-a="gadd" data-g="mobile">+ Ongeza pesa ya simu</button></p><button class="b" data-a="setsave">Hifadhi mipangilio</button></div>'}
+};
 function route(){
  let v=location.hash.slice(1);const ok=NAV.filter(n=>!n[2]||isA()).map(n=>n[0]);if(!ok.includes(v))v='muhtasari';S.view=v;
  const m=document.getElementById('msg');m.innerHTML=S.msg?'<div class="msg '+S.msg.k+'">'+esc(S.msg.t)+'</div>':'';S.msg=null;
- document.getElementById('view').innerHTML=V[v]();
+ const dv=S.docv&&S.docs.find(x=>x.id===S.docv);if(S.docv&&!dv)S.docv=null;document.getElementById('view').innerHTML=dv?sheetView(dv):V[v]();
  [].forEach.call(document.querySelectorAll('aside a'),a=>a.classList.toggle('on',a.dataset.v===v));
  const q=document.getElementById('q');if(q)q.addEventListener('input',()=>{S.q=q.value;const p=q.selectionStart;route();const n=document.getElementById('q');n.focus();n.setSelectionRange(p,p)});
  const dt=document.getElementById('dt');if(dt)dt.addEventListener('change',async()=>{if(!dt.value)return;S.date=dt.value;try{await loadAll()}catch(e){note(e.message)}route()});
@@ -165,11 +222,30 @@ async function onClick(e){
  if(a==='cancel'){S.form=null}
  else if(a==='gnew'||a==='gedit'){const g=a==='gedit'?S.guards.find(x=>x.id===id):{status:'Kazini'};S.form={kind:'g',id:a==='gedit'?id:null,title:a==='gedit'?'Hariri mlinzi':'Mlinzi mpya',v:g,fields:[{k:'full_name',l:'Jina kamili',t:'text'},{k:'phone',l:'Simu',t:'text'},{k:'client_id',l:'Kituo (mteja)',t:'select',o:clientOpts(true)},{k:'status',l:'Hali',t:'select',o:[['Kazini','Kazini'],['Likizo','Likizo'],['Amesimamishwa','Amesimamishwa']]}]}}
  else if(a==='cnew'||a==='cedit'){const c=a==='cedit'?S.clients.find(x=>x.id===id):{},k=a==='cedit'?ctr(id):{};S.form={kind:'c',id:a==='cedit'?id:null,title:a==='cedit'?'Hariri mteja':'Mteja mpya',v:{name:c.name,guards_required:k.guards_required,monthly_fee:k.monthly_fee,end_date:k.end_date},fields:[{k:'name',l:'Jina la mteja',t:'text'},{k:'guards_required',l:'Walinzi wanaohitajika',t:'number'},{k:'monthly_fee',l:'Ada kwa mwezi (TSh)',t:'number'},{k:'end_date',l:'Mkataba unaisha',t:'date'}]}}
- else if(a==='inew'){if(!S.clients.length){note('Ongeza mteja kwanza.');route();return}S.form={kind:'i',title:'Ankara mpya',v:{due_date:addDays(today(),30)},fields:[{k:'client_id',l:'Mteja',t:'select',o:clientOpts()},{k:'amount',l:'Kiasi (TSh)',t:'number'},{k:'due_date',l:'Tarehe ya mwisho',t:'date'},{k:'note',l:'Maelezo (si lazima)',t:'text'}]}}
+ else if(a==='gdel'||a==='cdel'||a==='sdel'||a==='mdel'||a==='ddel'){if(!confirm('Una uhakika unataka kufuta? Hatua hii haiwezi kurudishwa.'))return;const r=await sb.from({gdel:'guards',cdel:'clients',sdel:'stock_items',mdel:'stock_moves',ddel:'documents'}[a]).delete().eq('id',id);if(r.error)throw r.error;await loadAll();note('Imefutwa.','o')}
+ else if(a==='snew'||a==='sedit'){const i=a==='sedit'?S.items.find(x=>x.id===id):{unit:'pcs',reorder_level:0};S.form={kind:'si',id:a==='sedit'?id:null,title:a==='sedit'?'Hariri bidhaa':'Bidhaa mpya',v:i,fields:[{k:'name',l:'Jina la bidhaa',t:'text'},{k:'unit',l:'Kipimo (pcs, jozi, kg)',t:'text'},{k:'reorder_level',l:'Kiwango cha chini (onyo)',t:'number'}]}}
+ else if(a==='smove'){S.form={kind:'sm',title:b.dataset.k==='in'?'Pokea stoo':'Toa stoo',v:{item_id:id,kind:b.dataset.k,move_date:today()},fields:[{k:'item_id',l:'Bidhaa',t:'select',o:S.items.map(i=>[i.id,i.name])},{k:'kind',l:'Aina',t:'select',o:[['in','Pokea (ingia)'],['out','Toa (toka)'],['adjust','Marekebisho (+/-)']]},{k:'qty',l:'Idadi',t:'number'},{k:'move_date',l:'Tarehe',t:'date'},{k:'note',l:'Maelezo (mf. amepewa mlinzi X)',t:'text'}]}}
+ else if(a==='dnew'){const t=b.dataset.t;if(!S.clients.length&&t!=='receipt'){note('Ongeza mteja kwanza.');route();return}
+  const v={issue_date:today(),vat_percent:0,discount:0,client_id:(S.clients[0]||{}).id,due_date:t==='invoice'||t==='quotation'?addDays(today(),30):null};
+  if(t==='receipt'){const u=openInv();if(!u.length){note('Hakuna ankara inayosubiri malipo.');route();return}v.parent_id=u[0].id;v.amount_paid=invInfo(u[0]).bal;v.pay_method=PM[0]}
+  S.df={t:t,id:null,v:v,items:t==='receipt'?[]:[{desc:'',qty:1,price:0}]}}
+ else if(a==='dedit'){const d=S.docs.find(x=>x.id===id);S.df={t:d.doc_type,id:id,v:Object.assign({},d),items:(d.items||[]).map(x=>Object.assign({},x))}}
+ else if(a==='dcancel'){S.df=null}
+ else if(a==='ditem+'||a==='ditem-'){readDf();if(a==='ditem+')S.df.items.push({desc:'',qty:1,price:0});else S.df.items.splice(+b.dataset.i,1)}
+ else if(a==='dsave'){await dsave();return}
+ else if(a==='dview'){S.docv=id;window.scrollTo(0,0)}
+ else if(a==='dback'){S.docv=null}
+ else if(a==='print'){window.print();return}
+ else if(a==='dstat'){const s2=b.dataset.s;if(s2==='cancelled'&&!confirm('Ghairi nyaraka hii?'))return;const r=await sb.from('documents').update({status:s2}).eq('id',id);if(r.error)throw r.error;await loadAll()}
+ else if(a==='dconv'){await convert(id,b.dataset.to)}
+ else if(a==='drcpt'){const d=S.docs.find(x=>x.id===id);S.docv=null;S.df={t:'receipt',id:null,v:{issue_date:today(),parent_id:id,amount_paid:invInfo(d).bal,pay_method:PM[0]},items:[]};location.hash='risiti'}
+ else if(a==='gadd'){readSet();S.set[b.dataset.g].push({})}
+ else if(a==='gx'){readSet();S.set[b.dataset.g].splice(+b.dataset.i,1)}
+ else if(a==='setsave'){readSet();const r=await sb.from('settings').upsert({id:1,company:S.set.company,banks:S.set.banks.filter(x=>x.bank||x.account_no),mobile:S.set.mobile.filter(x=>x.provider||x.number)});if(r.error)throw r.error;await loadAll();note('Mipangilio imehifadhiwa.','o')}
  else if(a==='save'){await save();return}
  else if(a==='att'){const r=await sb.from('attendance').upsert({guard_id:id,work_date:S.date,status:b.dataset.s},{onConflict:'guard_id,work_date'});if(r.error)throw r.error;const i=S.att.findIndex(x=>x.guard_id===id&&x.work_date===S.date);if(i>-1)S.att[i].status=b.dataset.s;else S.att.push({guard_id:id,work_date:S.date,status:b.dataset.s})}
- else if(a==='pay'){const r=await sb.from('invoices').update({paid_at:today()}).eq('id',id);if(r.error)throw r.error;await loadAll()}
- }catch(x){note('Imeshindwa: '+x.message)}
+
+ }catch(x){note(/foreign key|violates/i.test(x.message)?'Haiwezi kufutwa kwa sababu inatumika kwingine (mfano mteja ana nyaraka).':'Imeshindwa: '+x.message)}
  route();
 }
 async function save(){
@@ -183,13 +259,26 @@ async function save(){
   if(cid){const r=await sb.from('clients').update({name:n}).eq('id',cid);err=r.error}
   else{const r=await sb.from('clients').insert({name:n}).select().single();err=r.error;if(!err)cid=r.data.id}
   if(!err){const r=await sb.from('contracts').upsert(Object.assign({client_id:cid},k),{onConflict:'client_id'});err=r.error}}
- if(f.kind==='i'){const am=Number(val('amount'));if(!(am>0)||!val('due_date')){note('Weka kiasi na tarehe ya mwisho.');return route()}
-  const r=await sb.from('invoices').insert({client_id:val('client_id'),amount:am,due_date:val('due_date'),note:val('note')||null});err=r.error}
+ if(f.kind==='si'){const n=val('name');if(n.length<2){note('Andika jina la bidhaa.');return route()}const row={name:n,unit:val('unit')||'pcs',reorder_level:Number(val('reorder_level'))||0};const r=f.id?await sb.from('stock_items').update(row).eq('id',f.id):await sb.from('stock_items').insert(row);err=r.error}
+ if(f.kind==='sm'){const q=Number(val('qty')),k=val('kind'),it=val('item_id');if(!it||!q||(k!=='adjust'&&q<0)){note('Weka bidhaa na idadi sahihi.');return route()}if(k==='out'&&q>onHand(it)){note('Stoo haitoshi. Kilichopo: '+onHand(it));return route()}const r=await sb.from('stock_moves').insert({item_id:it,kind:k,qty:q,move_date:val('move_date')||today(),note:val('note')||null});err=r.error}
  if(err){note('Imeshindwa kuhifadhi: '+err.message);return route()}
  S.form=null;try{await loadAll()}catch(x){note(x.message)}
  if(!S.msg)note('Imehifadhiwa.','o');route();
 }
-addEventListener('hashchange',()=>{if(S.uid&&document.getElementById('view'))route()});
+async function dsave(){readDf();const f=S.df,t=f.t,v=f.v;let row;
+ if(t==='receipt'){const inv=S.docs.find(d=>d.id===v.parent_id);if(!inv){note('Chagua ankara.');return route()}const am=Number(v.amount_paid);if(!(am>0)){note('Weka kiasi.');return route()}const old=f.id?Number((S.docs.find(x=>x.id===f.id)||{}).amount_paid)||0:0,bal=invInfo(inv).bal+old;if(am>bal+0.001){note('Kiasi kinazidi salio ('+fm(bal)+').');return route()}
+  row={client_id:inv.client_id,parent_id:inv.id,issue_date:v.issue_date||today(),amount_paid:am,pay_method:v.pay_method,pay_ref:v.pay_ref||null}}
+ else{const items=f.items.filter(x=>String(x.desc).trim()&&Number(x.qty)>0).map(x=>({desc:String(x.desc).trim(),qty:Number(x.qty),price:Number(x.price)||0}));if(!v.client_id||!items.length){note('Chagua mteja na weka kipengee angalau kimoja.');return route()}
+  row={client_id:v.client_id,issue_date:v.issue_date||today(),due_date:v.due_date||null,items:items,vat_percent:Number(v.vat_percent)||0,discount:Number(v.discount)||0,notes:v.notes||null}}
+ const r=f.id?await sb.from('documents').update(row).eq('id',f.id):await sb.from('documents').insert(Object.assign({doc_type:t,doc_number:nextNo(t),status:t==='receipt'?'sent':'draft'},row));
+ if(r.error){note('Imeshindwa kuhifadhi: '+r.error.message);return route()}
+ S.df=null;try{await loadAll()}catch(x){note(x.message)}if(!S.msg)note('Imehifadhiwa.','o');route()}
+async function convert(id,to){const d=S.docs.find(x=>x.id===id),inv=to==='invoice';
+ const row={doc_type:to,doc_number:nextNo(to),client_id:d.client_id,parent_id:d.id,issue_date:today(),due_date:inv?addDays(today(),30):null,items:to==='delivery_note'?(d.items||[]).map(i=>({desc:i.desc,qty:i.qty,price:0})):d.items,vat_percent:inv?d.vat_percent:0,discount:inv?d.discount:0,status:'draft'};
+ const r=await sb.from('documents').insert(row).select().single();if(r.error)throw r.error;
+ if(inv&&d.doc_type==='quotation'){const u=await sb.from('documents').update({status:'accepted'}).eq('id',id);if(u.error)throw u.error}
+ await loadAll();S.docv=r.data.id;note('Imetengenezwa: '+row.doc_number,'o')}
+addEventListener('hashchange',()=>{S.docv=null;if(S.uid&&document.getElementById('view'))route()});
 boot();
 })();
 </script>
