@@ -1,6 +1,6 @@
-// Weka hapa anwani ya mradi wako wa Supabase na ufunguo wa UMMA (anon public).
-// USIWEKE kamwe "service_role" key hapa.
+// Anwani ya mradi wa Supabase na ufunguo wa UMMA (publishable). Si siri; ulinzi uko kwenye sheria za hifadhidata (RLS).
+// USIWEKE kamwe "secret" au "service_role" key hapa.
 window.EAGLE_CONFIG = {
-  url: "PASTE_SUPABASE_URL",
-  key: "PASTE_SUPABASE_ANON_KEY"
+  url: "https://psgueoifgxpcbwisqiun.supabase.co",
+  key: "sb_publishable_oDrw6eYSSJj0AwcHRCyJ-Q_5p4gWzmo"
 };
