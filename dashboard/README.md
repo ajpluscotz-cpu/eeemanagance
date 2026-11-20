@@ -23,3 +23,6 @@ insert into public.profiles (id, full_name, role) select id, 'Jina', 'msimamizi'
 ## Nyaraka
 Mipangilio > weka jina la kampuni, TIN, benki na pesa ya simu; zitaonekana kwenye nukuu na ankara. Kila nyaraka ina namba ya kiotomatiki (QT-, INV-, DN-, RCT-) na inachapishwa/kuhifadhiwa PDF kwa kitufe cha "Chapisha / Pakua PDF".
 Mtiririko: Nukuu > Ankara > Pokea malipo (Risiti) > Hati ya Kukabidhi. Nyaraka zilizotolewa zinaghairiwa kwanza kabla ya kufutwa.
+
+## Slideshow na Matangazo (website)
+Kwenye menyu ya msimamizi mkuu: "Slideshow ya Website" (pakia picha na maandishi ya slaidi za ukurasa wa nyumbani) na "Matangazo (Blogs)" (habari zinazoonekana kwenye ukurasa wa Makala). Picha zinapunguzwa ukubwa zenyewe kabla ya kupakiwa. Endesha `schema.sql` tena ili kuunda jedwali na hifadhi ya picha (`site-media`).

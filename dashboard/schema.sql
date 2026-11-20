@@ -122,6 +122,39 @@ create policy a_ins on public.attendance for insert to authenticated with check 
 create policy a_upd on public.attendance for update to authenticated using (public.my_role() is not null) with check (public.my_role() is not null);
 create policy a_del on public.attendance for delete to authenticated using (public.my_role() = 'admin');
 
+
+-- Maudhui ya website: slaidi na matangazo (blogs), na hifadhi ya picha
+create table if not exists public.site_slides (
+  id uuid primary key default gen_random_uuid(),
+  image_path text not null,
+  title_sw text, title_en text, text_sw text, text_en text,
+  sort_order int not null default 0,
+  active boolean not null default true,
+  created_at timestamptz default now()
+);
+create table if not exists public.posts (
+  id uuid primary key default gen_random_uuid(),
+  title_sw text, title_en text, body_sw text, body_en text,
+  image_path text,
+  published boolean not null default true,
+  created_at timestamptz default now()
+);
+alter table public.site_slides enable row level security;
+alter table public.posts       enable row level security;
+-- wageni wa website wanasoma tu vilivyochapishwa; admin anasimamia vyote
+create policy ss_pub on public.site_slides for select to anon, authenticated using (active);
+create policy ss_adm on public.site_slides for all    to authenticated using (public.my_role() = 'admin') with check (public.my_role() = 'admin');
+create policy po_pub on public.posts       for select to anon, authenticated using (published);
+create policy po_adm on public.posts       for all    to authenticated using (public.my_role() = 'admin') with check (public.my_role() = 'admin');
+-- hifadhi ya picha (public kusoma; admin pekee kuandika)
+insert into storage.buckets (id, name, public) values ('site-media', 'site-media', true) on conflict (id) do update set public = true;
+drop policy if exists eagle_media_ins on storage.objects;
+drop policy if exists eagle_media_upd on storage.objects;
+drop policy if exists eagle_media_del on storage.objects;
+create policy eagle_media_ins on storage.objects for insert to authenticated with check (bucket_id = 'site-media' and public.my_role() = 'admin');
+create policy eagle_media_upd on storage.objects for update to authenticated using (bucket_id = 'site-media' and public.my_role() = 'admin');
+create policy eagle_media_del on storage.objects for delete to authenticated using (bucket_id = 'site-media' and public.my_role() = 'admin');
+
 -- BAADA ya kutengeneza mtumiaji wa kwanza (Authentication > Users), mfanye admin:
 -- insert into public.profiles (id, full_name, role)
 -- select id, 'John Fabian Mfoi', 'admin' from auth.users where email = 'BARUA-PEPE-YAKO';

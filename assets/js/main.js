@@ -7,15 +7,13 @@ t.addEventListener('click',function(){t.setAttribute('aria-expanded',l.classList
 l.addEventListener('click',function(e){if(e.target.tagName==='A'){l.classList.remove('on');t.setAttribute('aria-expanded','false')}});
 var h=$('header');function sc(){h.classList.toggle('sc',scrollY>40)}
 addEventListener('scroll',sc,{passive:true});sc();
-var bg=$$('.hbg span'),sl=$$('.sl'),dots=$$('.dots button'),i=0,tm;
-if(sl.length){
-function go(n){sl[i].classList.remove('on');if(bg[i])bg[i].classList.remove('on');dots[i].classList.remove('on');dots[i].removeAttribute('aria-current');i=(n+sl.length)%sl.length;sl[i].classList.add('on');if(bg[i])bg[i].classList.add('on');dots[i].classList.add('on');dots[i].setAttribute('aria-current','true')}
-function stop(){clearInterval(tm)}
-function play(){stop();if(!rm)tm=setInterval(function(){go(i+1)},6000)}
-dots.forEach(function(b,n){b.addEventListener('click',function(){go(n);play()})});
-var hero=$('.hero');['mouseenter','focusin'].forEach(function(e){hero.addEventListener(e,stop)});['mouseleave','focusout'].forEach(function(e){hero.addEventListener(e,play)});
-play();
-}
+var H={sl:[],bg:[],dots:[],i:0,tm:null};
+function hGo(n){if(!H.sl.length)return;H.sl[H.i].classList.remove('on');if(H.bg[H.i])H.bg[H.i].classList.remove('on');if(H.dots[H.i]){H.dots[H.i].classList.remove('on');H.dots[H.i].removeAttribute('aria-current')}H.i=(n+H.sl.length)%H.sl.length;H.sl[H.i].classList.add('on');if(H.bg[H.i])H.bg[H.i].classList.add('on');if(H.dots[H.i]){H.dots[H.i].classList.add('on');H.dots[H.i].setAttribute('aria-current','true')}}
+function hStop(){clearInterval(H.tm)}
+function hPlay(){hStop();if(!rm&&H.sl.length>1)H.tm=setInterval(function(){hGo(H.i+1)},6000)}
+function initHero(){hStop();H.sl=$$('.sl');H.bg=$$('.hbg span');H.dots=$$('.dots button');H.i=0;H.dots.forEach(function(b,n){b.addEventListener('click',function(){hGo(n);hPlay()})});hPlay()}
+var hero=$('.hero');if(hero){['mouseenter','focusin'].forEach(function(e){hero.addEventListener(e,hStop)});['mouseleave','focusout'].forEach(function(e){hero.addEventListener(e,hPlay)})}
+initHero();window.eeInitHero=initHero;
 function cnt(el){var to=+el.dataset.count;if(rm){el.textContent=to;return}var s=null;requestAnimationFrame(function f(ts){s=s||ts;var p=Math.min((ts-s)/1200,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})}
 if('IntersectionObserver' in window){
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cnt(e.target);io.unobserve(e.target)}})},{threshold:.6});
