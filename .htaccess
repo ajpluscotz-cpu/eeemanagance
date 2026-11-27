@@ -1,0 +1,16 @@
+# EAGLE EMERGENCY SECURITY — vichwa vya usalama (Apache / cPanel)
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
+</IfModule>
+
+# Usionyeshe orodha ya mafaili ya folda
+Options -Indexes
+
+# Ficha mafaili ya ndani yasiyohitajika na wageni (schema ya database, maelezo)
+<FilesMatch "^(schema\.sql|README\.md|README\.txt)$">
+  Require all denied
+</FilesMatch>
